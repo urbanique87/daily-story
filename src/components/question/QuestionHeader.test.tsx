@@ -7,3 +7,14 @@
  * 3. 현재 사용자의 프로필 이미지 표시 (등록된 이미지 없을시 기본 이미지 표시)
  * 4. 사용자 프로필 이미지를 클릭하면 사용자 정보 페이지로 이동한다.
  */
+
+import "@testing-library/jest-dom"
+import { render, screen } from "@testing-library/react"
+import QuestionHeader from "@/components/question/QuestionHeader"
+
+describe("QuestionHeader", () => {
+  it("컴포넌트가 렌더링되어야 한다.", () => {
+    render(<QuestionHeader />)
+    expect(screen.getByRole("banner")).toBeInTheDocument()
+  })
+})

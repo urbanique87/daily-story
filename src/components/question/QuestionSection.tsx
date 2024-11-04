@@ -5,6 +5,8 @@ import Link from "next/link"
 import axios from "axios"
 // libs
 import { formatCustomDate } from "@/lib/dateFormatter"
+// constants
+import { PATHS } from "@/constants/paths"
 
 interface QuestionData {
   id: number
@@ -39,11 +41,15 @@ export default function QuestionSection() {
   }, [])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return (
+      <div role="status" aria-live="polite">
+        Loading...
+      </div>
+    )
   }
 
   if (error) {
-    return <div>{error}</div>
+    return <div role="alert">{error}</div>
   }
 
   if (!questionData) {
@@ -51,13 +57,17 @@ export default function QuestionSection() {
   }
 
   return (
-    <section>
-      <div>{formatCustomDate(questionData.date)}</div>
-      <div>
+    <section className="px-5" role="region" aria-labelledby="question-section-title">
+      <p className="mb-1 text-sm text-gray-400">{formatCustomDate(questionData.date)}</p>
+      <p className="mb-1 text-base">
         오늘의 <span>{questionData.category}</span>
-      </div>
-      <p>{questionData.question}</p>
-      <Link href={`/question/${questionData.id}/answer`}>
+      </p>
+      <h2 className="mb-7 text-2xl font-bold">{questionData.question}</h2>
+      <Link
+        className="block pb-1 text-sm border-b"
+        aria-label={`오늘의 이야기 적기: ${questionData.question}`}
+        href={PATHS.ANSWER.byId(questionData.id)}
+      >
         ✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰
       </Link>
     </section>

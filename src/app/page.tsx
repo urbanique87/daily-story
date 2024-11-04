@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <main>
       <QuestionHeader defaultUser={TEST_USER} />
-      <QuestionSection />
+      <div className="py-6">
+        <QuestionSection />
+      </div>
     </main>
   )
 }

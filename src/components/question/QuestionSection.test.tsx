@@ -9,6 +9,7 @@ import QuestionSection from "@/components/question/QuestionSection"
 import { MOCK_QUESTION_DATA } from "@/mocks/question"
 // libs
 import { formatCustomDate } from "@/lib/dateFormatter"
+import { PATHS } from "@/constants/paths"
 
 const mockLinkText = "✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰"
 
@@ -70,7 +71,7 @@ describe("QuestionSection 컴포넌트", () => {
     it("답변을 입력 페이지로 이동하기 위한 안내 메시지가 표시되어야 한다", () => {
       const element = screen.getByRole("link")
       expect(element).toHaveTextContent(mockLinkText)
-      expect(element).toHaveAttribute("href", `/question/${MOCK_QUESTION_DATA.id}/answer`)
+      expect(element).toHaveAttribute("href", PATHS.ANSWER.byId(MOCK_QUESTION_DATA.id))
     })
   })
 
@@ -80,7 +81,7 @@ describe("QuestionSection 컴포넌트", () => {
       const element = screen.getByRole("link")
 
       await user.click(element)
-      expect(mockPush).toHaveBeenCalledWith(`/question/${MOCK_QUESTION_DATA.id}/answer`)
+      expect(mockPush).toHaveBeenCalledWith(PATHS.ANSWER.byId(MOCK_QUESTION_DATA.id))
     })
   })
 })

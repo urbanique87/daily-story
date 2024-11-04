@@ -13,17 +13,24 @@ interface QuestionHeaderProps {
 /**
  * 질문 페이지 헤더
  */
-
 export default function QuestionHeader({ defaultUser }: QuestionHeaderProps) {
   return (
-    <header role="banner">
-      <div>Hi</div>
-      <div>{defaultUser.nickname}</div>
-      <Link href={PATHS.PROFILE}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={defaultUser.profileImage} alt={`${defaultUser.nickname} profile`} />
+    <header role="banner" className="flex justify-between items-center h-20 px-5">
+      <section className="flex flex-col">
+        <div className="text-xs">
+          <span className="mr-1">Hi!</span>
+          <span>{defaultUser.nickname}</span>
+        </div>
+        <p className="text-lg font-medium">{getTimeBasedGreeting()}</p>
+      </section>
+
+      <Link href={PATHS.PROFILE} className="w-12 h-12 rounded-full overflow-hidden">
+        <img
+          className="w-full h-full object-cover"
+          src={defaultUser.profileImage}
+          alt={`${defaultUser.nickname} profile`}
+        />
       </Link>
-      <div>{getTimeBasedGreeting()}</div>
     </header>
   )
 }

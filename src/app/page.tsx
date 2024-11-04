@@ -1,15 +1,12 @@
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
-
-const mockUser = {
-  profileImage: "https://example.com/profile.jpg",
-  nickname: "홍길동",
-}
+// constants
+import { TEST_USER } from "@/constants/test_user"
 
 export default function Home() {
   return (
     <main>
-      <QuestionHeader defaultUser={mockUser} />
+      <QuestionHeader defaultUser={TEST_USER} />
     </main>
   )
 }

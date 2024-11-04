@@ -7,6 +7,8 @@ import userEvent from "@testing-library/user-event"
 import QuestionSection from "@/components/question/QuestionSection"
 // mocks
 import { MOCK_QUESTION_DATA } from "@/mocks/question"
+// libs
+import { formatCustomDate } from "@/lib/dateFormatter"
 
 const mockLinkText = "✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰"
 
@@ -82,16 +84,3 @@ describe("QuestionSection 컴포넌트", () => {
     })
   })
 })
-
-function formatCustomDate(dateString: string): string {
-  const date = new Date(dateString)
-  if (isNaN(date.getTime())) {
-    throw new Error("유효하지 않은 날짜 형식입니다.")
-  }
-
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(date)
-}

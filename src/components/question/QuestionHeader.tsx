@@ -24,7 +24,11 @@ export default function QuestionHeader({ defaultUser }: QuestionHeaderProps) {
         <p className="text-lg font-medium">{getTimeBasedGreeting()}</p>
       </section>
 
-      <Link href={PATHS.PROFILE} className="w-12 h-12 rounded-full overflow-hidden">
+      <Link
+        className="w-12 h-12 rounded-full overflow-hidden"
+        aria-label={`${defaultUser.nickname}의 프로필로 이동`}
+        href={PATHS.PROFILE}
+      >
         <img
           className="w-full h-full object-cover"
           src={defaultUser.profileImage}

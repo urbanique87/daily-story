@@ -3,9 +3,9 @@ import { TIME_BASED_GREETINGS, TIME_RANGES } from "@/constants/greetings"
 
 type Greeting = (typeof TIME_BASED_GREETINGS)[keyof typeof TIME_BASED_GREETINGS]
 
-const getGreetingForHour = (hours: number): Greeting => {
+export const getGreetingForHour = (hours: number): Greeting => {
   const range = TIME_RANGES.find(({ start, end }) => hours >= start && hours < end)
-  return range ? range.greeting : TIME_BASED_GREETINGS.NIGHT
+  return range ? range.greeting : TIME_BASED_GREETINGS.INVALID
 }
 
 export function getTimeBasedGreeting(): Greeting {

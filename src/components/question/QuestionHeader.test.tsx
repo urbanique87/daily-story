@@ -5,15 +5,9 @@ import userEvent from "@testing-library/user-event"
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
 // constants
-import { GREETINGS } from "@/constants/greetings"
 import { TEST_USER } from "@/constants/test_user"
-
-const TIME_RANGES = [
-  { hour: 5, greeting: GREETINGS.MORNING },
-  { hour: 12, greeting: GREETINGS.AFTERNOON },
-  { hour: 18, greeting: GREETINGS.EVENING },
-  { hour: 22, greeting: GREETINGS.NIGHT },
-] as const
+import { PATHS } from "@/constants/paths"
+import { TIME_RANGES } from "@/constants/greetings"
 
 // Mocks
 jest.mock("next/navigation", () => ({
@@ -86,7 +80,7 @@ describe("QuestionHeader 컴포넌트", () => {
 
     it("프로필 링크가 올바른 경로를 가져야 한다", () => {
       const element = screen.getByRole("link")
-      expect(element).toHaveAttribute("href", "/profile")
+      expect(element).toHaveAttribute("href", PATHS.PROFILE)
     })
 
     it("프로필 링크 클릭시 프로필 페이지로 이동해야 한다", async () => {
@@ -94,17 +88,18 @@ describe("QuestionHeader 컴포넌트", () => {
       const element = screen.getByRole("link")
 
       await user.click(element)
-      expect(mockPush).toHaveBeenCalledWith("/profile")
+      expect(mockPush).toHaveBeenCalledWith(PATHS.PROFILE)
     })
   })
 
   describe("시간대별 인사말", () => {
-    TIME_RANGES.forEach(({ hour, greeting }) => {
-      it(`${hour}시에는 "${greeting}" 메시지가 표시되어야 한다`, () => {
-        jest.spyOn(Date.prototype, "getHours").mockReturnValue(hour)
+    it.each(TIME_RANGES.map(({ start, end, greeting }) => [start, end, greeting]))(
+      '%d시부터 %d시까지는 "%s" 메시지가 표시되어야 한다',
+      (start, end, greeting) => {
+        jest.spyOn(Date.prototype, "getHours").mockReturnValue(start)
         renderHeader()
         expect(screen.getByText(greeting)).toBeInTheDocument()
-      })
-    })
+      }
+    )
   })
 })

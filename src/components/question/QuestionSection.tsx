@@ -1,39 +1,76 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import axios from "axios"
+
+interface QuestionData {
+  id: number
+  date: string
+  category: string
+  question: string
+}
+
+/**
+ * 질문 컴포넌트
+ */
+export default function QuestionSection() {
+  const [questionData, setQuestionData] = useState<QuestionData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const response = await axios.get("/api/questions")
+        setQuestionData(response.data)
+      } catch (error) {
+        setError("질문을 불러오는데 실패했습니다.")
+        console.error("Failed to fetch question data:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
+  if (!questionData) {
+    return <div>질문을 찾을 수 없습니다.</div>
+  }
+
+  return (
+    <section>
+      <div>{formatCustomDate(questionData.date)}</div>
+      <div>
+        오늘의 <span>{questionData.category}</span>
+      </div>
+      <p>{questionData.question}</p>
+      <Link href={`/question/${questionData.id}/answer`}>
+        ✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰
+      </Link>
+    </section>
+  )
+}
 
 function formatCustomDate(dateString: string): string {
-  // 입력받은 문자열을 Date 객체로 변환
   const date = new Date(dateString)
-
-  // 날짜 유효성 검사
   if (isNaN(date.getTime())) {
     throw new Error("유효하지 않은 날짜 형식입니다.")
   }
 
-  const options: Intl.DateTimeFormatOptions = {
+  return new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }
-
-  return new Intl.DateTimeFormat("en-GB", options).format(date)
-}
-
-/**
- * 질문 섹션
- */
-export default function QuestionSection() {
-  const id = 1
-  const category = "일상"
-  const question = "오늘, 가장 엉뚱했던 순간은 뭐였어?"
-
-  return (
-    <section>
-      <div>{formatCustomDate("2024-11-04")}</div>
-      <div>
-        오늘의 <span>{category}</span>
-      </div>
-      <p>{question}</p>
-      <Link href={`/question/${id}/answer`}>✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰</Link>
-    </section>
-  )
+  }).format(date)
 }

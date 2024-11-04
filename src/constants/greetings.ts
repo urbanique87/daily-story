@@ -3,6 +3,7 @@ export const TIME_BASED_GREETINGS = {
   AFTERNOON: "Good Afternoon!",
   EVENING: "Good Evening!",
   NIGHT: "Good Night!",
+  INVALID: "Welcome!",
 } as const
 
 export const TIME_RANGES = [

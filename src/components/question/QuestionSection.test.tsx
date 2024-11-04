@@ -1,3 +1,8 @@
+import "@testing-library/jest-dom"
+import { render } from "@testing-library/react"
+// components
+import QuestionSection from "@/components/question/QuestionSection"
+
 /**
  * @description
  *
@@ -9,3 +14,13 @@
  * 4-1. 링크 텍스트: ✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰
  * 4-2. 링크 클릭시, 답변 페이지로 이동한다.
  */
+
+describe("QuestionSection 컴포넌트", () => {
+  describe("기본 렌더링", () => {
+    beforeEach(() => {
+      render(<QuestionSection />) // 컴포넌트를 렌더링합니다.
+    })
+
+    it("질문 섹션 컴포넌트가 렌더링되어야 한다", () => {})
+  })
+})

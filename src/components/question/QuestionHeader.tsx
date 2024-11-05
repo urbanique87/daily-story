@@ -5,7 +5,6 @@ import { DefaultUser } from "@/types/user"
 import { getTimeBasedGreeting } from "@/lib/getTimeBasedGreeting"
 // constants
 import { PATHS } from "@/constants/paths"
-
 interface QuestionHeaderProps {
   defaultUser: DefaultUser
 }

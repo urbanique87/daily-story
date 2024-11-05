@@ -4,8 +4,9 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
+// mocks
+import { MOCK_USER } from "@/mocks/user"
 // constants
-import { TEST_USER } from "@/constants/test_user"
 import { PATHS } from "@/constants/paths"
 import { TIME_RANGES } from "@/constants/greetings"
 
@@ -38,7 +39,7 @@ describe("QuestionHeader 컴포넌트", () => {
   const mockPush = jest.fn()
 
   const renderHeader = () => {
-    return render(<QuestionHeader defaultUser={TEST_USER} />)
+    return render(<QuestionHeader defaultUser={MOCK_USER} />)
   }
 
   beforeEach(() => {
@@ -60,16 +61,16 @@ describe("QuestionHeader 컴포넌트", () => {
     })
 
     it("사용자의 닉네임이 표시되어야 한다", () => {
-      expect(screen.getByText(TEST_USER.nickname)).toBeInTheDocument()
+      expect(screen.getByText(MOCK_USER.nickname)).toBeInTheDocument()
     })
 
     it("프로필 이미지가 올바른 속성으로 표시되어야 한다", () => {
       const element = screen.getByRole("img", {
-        name: new RegExp(`${TEST_USER.nickname} profile`, "i"),
+        name: new RegExp(`${MOCK_USER.nickname} profile`, "i"),
       })
 
       expect(element).toBeInTheDocument()
-      expect(element).toHaveAttribute("src", TEST_USER.profileImage)
+      expect(element).toHaveAttribute("src", MOCK_USER.profileImage)
     })
   })
 

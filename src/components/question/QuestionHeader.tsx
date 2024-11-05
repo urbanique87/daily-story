@@ -29,6 +29,7 @@ export default function QuestionHeader({ defaultUser }: QuestionHeaderProps) {
         aria-label={`${defaultUser.nickname}의 프로필로 이동`}
         href={PATHS.PROFILE}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="w-full h-full object-cover"
           src={defaultUser.profileImage}

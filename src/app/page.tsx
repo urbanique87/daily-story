@@ -1,7 +1,8 @@
 import { Suspense } from "react"
 // components
+import QuestionHeader from "@/components/question/QuestionHeader"
+import QuestionHeaderSkeleton from "@/components/question/QuestionHeaderSkeleton"
 import QuestionSection from "@/components/question/QuestionSection"
-import QuestionHeader, { QuestionHeaderSkeleton } from "@/components/question/QuestionHeader"
 
 export const dynamic = "force-dynamic"
 

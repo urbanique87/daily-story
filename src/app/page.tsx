@@ -1,13 +1,18 @@
+import { Suspense } from "react"
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
+import QuestionHeaderSkeleton from "@/components/question/QuestionHeaderSkeleton"
 import QuestionSection from "@/components/question/QuestionSection"
-// constants
-import { TEST_USER } from "@/constants/test_user"
 
-export default function Home() {
+export const dynamic = "force-dynamic"
+
+export default async function Home() {
   return (
     <main>
-      <QuestionHeader defaultUser={TEST_USER} />
+      <Suspense fallback={<QuestionHeaderSkeleton />}>
+        <QuestionHeader />
+      </Suspense>
+
       <div className="py-6">
         <QuestionSection />
       </div>

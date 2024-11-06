@@ -1,19 +1,17 @@
 import Link from "next/link"
-// types
-import { DefaultUser } from "@/types/user"
 // libs
 import { getTimeBasedGreeting } from "@/lib/getTimeBasedGreeting"
 // constants
 import { PATHS } from "@/constants/paths"
-
-interface QuestionHeaderProps {
-  defaultUser: DefaultUser
-}
+// api
+import { getUser } from "@/lib/api/user"
 
 /**
  * 질문 페이지 헤더
  */
-export default function QuestionHeader({ defaultUser }: QuestionHeaderProps) {
+export default async function QuestionHeader() {
+  const defaultUser = await getUser()
+
   return (
     <header role="banner" className="flex justify-between items-center h-20 px-5">
       <section className="flex flex-col">
@@ -29,6 +27,7 @@ export default function QuestionHeader({ defaultUser }: QuestionHeaderProps) {
         aria-label={`${defaultUser.nickname}의 프로필로 이동`}
         href={PATHS.PROFILE}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="w-full h-full object-cover"
           src={defaultUser.profileImage}

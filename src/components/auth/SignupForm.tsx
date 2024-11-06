@@ -5,8 +5,10 @@ import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
 // actions
 import { signup } from "@/actions/auth"
-// utils
-import { validateEmail, validatePassword } from "@/lib/utils/validation"
+// hooks
+import { useValidation } from "@/hooks/useValidation"
+// components
+import { InputField } from "@/components/InputField"
 
 // Submit 버튼 컴포넌트
 function SubmitButton() {
@@ -26,28 +28,9 @@ function SubmitButton() {
 export function SignupForm() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
-  const [emailError, setEmailError] = useState<string | null>(null)
-  const [passwordError, setPasswordError] = useState<string | null>(null)
-
   const [, startTransition] = useTransition()
-
+  const { errors, validateField } = useValidation()
   const router = useRouter()
-
-  // 클라이언트 측 유효성 검사
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-
-    if (name === "email") {
-      const { error } = validateEmail(value)
-      setEmailError(error)
-      return
-    }
-
-    if (name === "password") {
-      const { error } = validatePassword(value)
-      setPasswordError(error)
-    }
-  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -58,22 +41,15 @@ export function SignupForm() {
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
-    const emailValidation = validateEmail(email)
-    const passwordValidation = validatePassword(password)
-
-    if (!emailValidation.isValid || !passwordValidation.isValid) {
+    if (validateField("email", email) || validateField("password", password)) {
       setError("입력값을 확인해주세요.")
-      setEmailError(emailValidation.error)
-      setPasswordError(passwordValidation.error)
       return
     }
 
     try {
       startTransition(async () => {
         await signup(formData)
-
         setSuccess(true)
-
         form.reset()
         router.replace("/login")
       })
@@ -91,33 +67,27 @@ export function SignupForm() {
       )}
 
       <div className="mb-1">
-        <label htmlFor="email" className="block mb-2">
-          이메일
-        </label>
-        <input
+        <InputField
           id="email"
           name="email"
           type="email"
+          label="이메일"
+          onChange={(e) => validateField(e.target.name, e.target.value)}
+          error={errors.email}
           required
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded"
         />
-        {emailError && <p className="mt-1 text-sm text-red-500">{emailError}</p>}
       </div>
 
       <div className="mb-1">
-        <label htmlFor="password" className="block mb-2">
-          비밀번호
-        </label>
-        <input
+        <InputField
           id="password"
           name="password"
           type="password"
+          label="비밀번호"
+          onChange={(e) => validateField(e.target.name, e.target.value)}
+          error={errors.password}
           required
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded"
         />
-        {passwordError && <p className="mt-1 text-sm text-red-500">{passwordError}</p>}
       </div>
 
       <SubmitButton />

@@ -1,9 +1,7 @@
 import { Suspense } from "react"
 // components
-import QuestionHeaderWithSuspense, {
-  QuestionHeaderSkeleton,
-} from "@/components/question/QuestionHeaderWithSuspense"
 import QuestionSection from "@/components/question/QuestionSection"
+import QuestionHeader, { QuestionHeaderSkeleton } from "@/components/question/QuestionHeader"
 
 export const dynamic = "force-dynamic"
 
@@ -11,7 +9,7 @@ export default async function Home() {
   return (
     <main>
       <Suspense fallback={<QuestionHeaderSkeleton />}>
-        <QuestionHeaderWithSuspense />
+        <QuestionHeader />
       </Suspense>
 
       <div className="py-6">

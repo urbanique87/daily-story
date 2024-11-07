@@ -9,6 +9,8 @@ import { signup } from "@/actions/auth"
 import { useValidation } from "@/hooks/useValidation"
 // components
 import { InputField } from "@/components/InputField"
+// context
+import { useAuth } from "@/context/AuthContext"
 
 // Submit 버튼 컴포넌트
 function SubmitButton() {
@@ -32,6 +34,8 @@ export function SignupForm() {
   const { errors, validateField } = useValidation()
   const router = useRouter()
 
+  const { setAccessToken } = useAuth()
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -48,22 +52,33 @@ export function SignupForm() {
 
     try {
       startTransition(async () => {
-        await signup(formData)
+        const result = await signup(formData)
+        if (result.accessToken) {
+          setAccessToken(result.accessToken)
+        }
+
         setSuccess(true)
+
         form.reset()
         router.replace("/login")
       })
     } catch (e) {
-      setError(e instanceof Error ? e.message : "회원가입 중 오류가 발생했습니다.")
+      setError(
+        e instanceof Error ? e.message : "회원가입 중 오류가 발생했습니다."
+      )
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="px-5">
-      {error && <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>}
+      {error && (
+        <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
+      )}
 
       {success && (
-        <div className="p-3 text-green-500 bg-green-100 rounded">회원가입이 완료되었습니다!</div>
+        <div className="p-3 text-green-500 bg-green-100 rounded">
+          회원가입이 완료되었습니다!
+        </div>
       )}
 
       <div className="mb-1">

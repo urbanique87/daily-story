@@ -31,6 +31,10 @@ export async function POST(request: Request) {
       data: {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,
+        user: {
+          id: TEST_USER_ID,
+          email,
+        },
       },
     })
   } catch (error) {

@@ -27,14 +27,17 @@ function SubmitButton() {
   )
 }
 
+/**
+ * 회원가입 페이지
+ */
 export function SignupForm() {
+  const router = useRouter()
+  const { setUser, setAccessToken } = useAuth()
+
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [, startTransition] = useTransition()
   const { errors, validateField } = useValidation()
-  const router = useRouter()
-
-  const { setAccessToken } = useAuth()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -53,14 +56,14 @@ export function SignupForm() {
     try {
       startTransition(async () => {
         const result = await signup(formData)
-        if (result.accessToken) {
-          setAccessToken(result.accessToken)
-        }
-
+        const { user, accessToken } = result
+        // 응답에서 사용자 정보와 액세스 토큰을 받아 AuthContext에 저장한다.
+        setUser(user)
+        setAccessToken(accessToken)
         setSuccess(true)
 
         form.reset()
-        router.replace("/login")
+        router.replace("/")
       })
     } catch (e) {
       setError(

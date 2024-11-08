@@ -3,12 +3,20 @@
 import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 import jwt, { JwtPayload } from "jsonwebtoken"
+// lib
+import { getEnv } from "@/shared/lib"
 
 interface AuthResponse {
   message: string
   data: {
     accessToken: string
     refreshToken: string
+    user: {
+      id: number
+      email: string
+      nickname: string
+      profileImage: string
+    }
   }
 }
 
@@ -28,7 +36,7 @@ export async function signup(formData: FormData) {
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/signup`,
+      `${getEnv("NEXT_PUBLIC_BASE_URL")}/api/auth/signup`,
       {
         method: "POST",
         headers: {
@@ -46,7 +54,7 @@ export async function signup(formData: FormData) {
     }
 
     const body: AuthResponse = await response.json()
-    const { accessToken, refreshToken } = body.data
+    const { user, accessToken, refreshToken } = body.data
 
     // 페이지 데이터 갱신
     revalidatePath("/signup")
@@ -58,6 +66,7 @@ export async function signup(formData: FormData) {
     return {
       success: true,
       accessToken,
+      user,
     }
   } catch (error) {
     console.error("Signup error:", error)

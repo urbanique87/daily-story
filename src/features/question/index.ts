@@ -1,5 +1,5 @@
 export { QuestionHeader } from "@/features/question/components/QuestionHeader"
-export { QuestionHeaderSkeleton } from "@/features/question/components/QuestionHeaderSkeleton"
+export { QuestionHeaderSkeleton } from "@/features/question/components/QuestionHeader.skeleton"
 
 export { QuestionSection } from "@/features/question/components/QuestionSection"
 

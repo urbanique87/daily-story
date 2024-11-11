@@ -4,7 +4,7 @@ import { FormEvent, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
 // actions
-import { signup } from "@/actions/auth"
+import { signup } from "@/actions/auth.actions"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
 // components
@@ -70,7 +70,7 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="px-5">
+    <form onSubmit={handleSubmit}>
       {error && (
         <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
       )}

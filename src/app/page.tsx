@@ -3,19 +3,27 @@ import { Suspense } from "react"
 import QuestionHeader from "@/components/question/QuestionHeader"
 import QuestionHeaderSkeleton from "@/components/question/QuestionHeaderSkeleton"
 import QuestionSection from "@/components/question/QuestionSection"
+import AuthMenu from "@/components/auth/AuthMenu"
 
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
+  const isAuthorized = false
+
   return (
     <main>
-      <Suspense fallback={<QuestionHeaderSkeleton />}>
-        <QuestionHeader />
-      </Suspense>
-
-      <div className="py-6">
-        <QuestionSection />
-      </div>
+      {isAuthorized ? (
+        <>
+          <Suspense fallback={<QuestionHeaderSkeleton />}>
+            <QuestionHeader />
+          </Suspense>
+          <div className="py-6">
+            <QuestionSection />
+          </div>
+        </>
+      ) : (
+        <AuthMenu />
+      )}
     </main>
   )
 }

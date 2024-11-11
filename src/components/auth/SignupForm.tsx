@@ -10,7 +10,7 @@ import { useValidation } from "@/hooks/useValidation"
 // components
 import { InputField } from "@/components/common/InputField"
 // context
-import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/auth.context"
 // constants
 import { PATHS } from "@/constants/paths"
 

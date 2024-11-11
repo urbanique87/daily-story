@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 // providers
-import { AuthProvider } from "@/context/AuthContext"
+import { AuthProvider } from "@/context/auth.context"
 // styles
 import "./globals.css"
 

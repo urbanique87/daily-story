@@ -11,6 +11,7 @@ import { useValidation } from "@/hooks/useValidation"
 import { InputField } from "@/components/common/InputField"
 // context
 import { useAuth } from "@/context/AuthContext"
+import { PATHS } from "@/constants/paths"
 
 // Submit 버튼 컴포넌트
 function SubmitButton() {
@@ -60,7 +61,7 @@ export function SignupForm() {
         setSuccess(true)
 
         form.reset()
-        router.replace("/login")
+        router.replace(PATHS.MAIN)
       })
     } catch (e) {
       setError(

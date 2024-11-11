@@ -43,7 +43,10 @@ export class TokenService {
   private generateToken(
     payload: Omit<TokenPayload, "type">,
     type: TokenPayload["type"]
-  ): string {
+  ): {
+    token: string
+    expiresAt: number
+  } {
     const config =
       type === "access" ? AUTH_CONFIG.ACCESS_TOKEN : AUTH_CONFIG.REFRESH_TOKEN
 
@@ -51,10 +54,16 @@ export class TokenService {
       type === "access" ? this.accessTokenSecret : this.refreshTokenSecret
 
     try {
-      return jwt.sign({ ...payload, type }, secret, {
+      const token = jwt.sign({ ...payload, type }, secret, {
         expiresIn: config.EXPIRES_IN,
         algorithm: config.ALGORITHM,
       })
+
+      // 토큰의 exp 클레임 추출
+      const decoded = jwt.decode(token) as jwt.JwtPayload
+      const expiresAt = decoded.exp!
+
+      return { token, expiresAt }
     } catch (error) {
       console.error(error)
       throw new Error("토큰 생성 중 오류가 발생했습니다.")
@@ -64,8 +73,8 @@ export class TokenService {
   // 토큰 페어
   generateTokenPair(payload: Omit<TokenPayload, "type">) {
     return {
-      accessToken: this.generateToken(payload, "access"),
-      refreshToken: this.generateToken(payload, "refresh"),
+      access: this.generateToken(payload, "access"),
+      refresh: this.generateToken(payload, "refresh"),
     }
   }
 

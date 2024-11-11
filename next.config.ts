@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  compiler: {
+    removeConsole: {
+      exclude: ["error"],
+    },
+  },
   /* config options here */
-};
+}
 
-export default nextConfig;
+export default nextConfig

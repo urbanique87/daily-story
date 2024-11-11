@@ -4,7 +4,7 @@ import { FormEvent, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
 // actions
-import { signup } from "@/actions/auth.actions"
+import { signin } from "@/actions/signin.actions"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
 // components
@@ -24,12 +24,12 @@ function SubmitButton() {
       disabled={pending}
       className="w-full px-4 py-2 text-white bg-blue-500 rounded disabled:bg-blue-300"
     >
-      {pending ? "잠시만 기다려주세요" : "회원가입"}
+      {pending ? "잠시만 기다려주세요" : "로그인"}
     </button>
   )
 }
 
-export function SignupForm() {
+export function SigninForm() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [, startTransition] = useTransition()
@@ -54,7 +54,12 @@ export function SignupForm() {
 
     try {
       startTransition(async () => {
-        const result = await signup(formData)
+        const result = await signin(formData)
+
+        if (result.success === false) {
+          return
+        }
+
         if (result.accessToken) {
           setAccessToken(result.accessToken)
         }
@@ -66,7 +71,7 @@ export function SignupForm() {
       })
     } catch (e) {
       setError(
-        e instanceof Error ? e.message : "회원가입 중 오류가 발생했습니다."
+        e instanceof Error ? e.message : "로그인 중 오류가 발생했습니다."
       )
     }
   }
@@ -79,7 +84,7 @@ export function SignupForm() {
 
       {success && (
         <div className="p-3 text-green-500 bg-green-100 rounded">
-          회원가입이 완료되었습니다!
+          로그인이 완료되었습니다!
         </div>
       )}
 
@@ -89,7 +94,9 @@ export function SignupForm() {
           name="email"
           type="email"
           label="이메일"
-          onChange={(e) => validateField(e.target.name, e.target.value)}
+          onChange={(event) =>
+            validateField(event.target.name, event.target.value)
+          }
           error={errors.email}
           required
         />
@@ -101,7 +108,9 @@ export function SignupForm() {
           name="password"
           type="password"
           label="비밀번호"
-          onChange={(e) => validateField(e.target.name, e.target.value)}
+          onChange={(event) =>
+            validateField(event.target.name, event.target.value)
+          }
           error={errors.password}
           required
         />

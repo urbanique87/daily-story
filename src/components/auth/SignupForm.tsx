@@ -8,7 +8,7 @@ import { signup } from "@/actions/auth"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
 // components
-import { InputField } from "@/components/InputField"
+import { InputField } from "@/components/common/InputField"
 // context
 import { useAuth } from "@/context/AuthContext"
 

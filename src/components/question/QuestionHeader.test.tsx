@@ -15,12 +15,18 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }))
 
-jest.mock("@/lib/api/user", () => ({
+jest.mock("@/service/user.service", () => ({
   getUser: jest.fn(() => Promise.resolve(MOCK_USER)),
 }))
 
 jest.mock("next/link", () => {
-  const MockLink = ({ children, href }: { children: React.ReactNode; href: string }) => {
+  const MockLink = ({
+    children,
+    href,
+  }: {
+    children: React.ReactNode
+    href: string
+  }) => {
     const router = useRouter()
     return (
       <a
@@ -101,7 +107,9 @@ describe("QuestionHeader 컴포넌트", () => {
   })
 
   describe("시간대별 인사말", () => {
-    it.each(TIME_RANGES.map(({ start, end, greeting }) => [start, end, greeting]))(
+    it.each(
+      TIME_RANGES.map(({ start, end, greeting }) => [start, end, greeting])
+    )(
       '%d시부터 %d시까지는 "%s" 메시지가 표시되어야 한다',
       async (start, end, greeting) => {
         jest.spyOn(Date.prototype, "getHours").mockReturnValue(start)

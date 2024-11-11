@@ -4,7 +4,7 @@ import { getTimeBasedGreeting } from "@/lib/getTimeBasedGreeting"
 // constants
 import { PATHS } from "@/constants/paths"
 // api
-import { getUser } from "@/lib/api/user"
+import { getUser } from "@/service/user.service"
 
 /**
  * 질문 페이지 헤더
@@ -13,7 +13,10 @@ export default async function QuestionHeader() {
   const defaultUser = await getUser()
 
   return (
-    <header role="banner" className="flex justify-between items-center h-20 px-5">
+    <header
+      role="banner"
+      className="flex justify-between items-center h-20 px-5"
+    >
       <section className="flex flex-col">
         <div className="text-xs">
           <span className="mr-1">Hi!</span>

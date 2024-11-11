@@ -13,10 +13,12 @@
   "dependencies": {
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
+    "clsx": "^2.1.1",
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028"
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",

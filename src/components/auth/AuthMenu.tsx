@@ -2,8 +2,7 @@ import { PATHS } from "@/constants/paths"
 import { Heading } from "../ui/typography/Heading"
 import { Text } from "../ui/typography/Text"
 import { TextLink } from "../ui/link/TextLink"
-import { Button } from "../ui/button/TextButton"
-import Link from "next/link"
+// import { Button } from "../ui/button/TextButton"
 
 export default function AuthMenu() {
   return (
@@ -20,9 +19,9 @@ export default function AuthMenu() {
         </Text>
 
         <div className="flex flex-col">
-          <Button variant="primary" size="md" className="mb-2">
+          {/* <Button variant="primary" size="md" className="mb-2">
             게스트로 시작
-          </Button>
+          </Button> */}
 
           <TextLink
             variant="body"
@@ -34,7 +33,7 @@ export default function AuthMenu() {
             회원가입
           </TextLink>
 
-          <TextLink variant="body" size="md" href={PATHS.SINGIN}>
+          <TextLink variant="body" size="md" href={PATHS.SIGNIN}>
             로그인
           </TextLink>
         </div>

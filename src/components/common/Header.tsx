@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+// constants
 import { PATHS } from "@/constants/paths"
 
 export default function Header() {

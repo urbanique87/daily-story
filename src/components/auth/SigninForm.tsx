@@ -3,40 +3,24 @@
 import { FormEvent, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
-// actions
-import { signin } from "@/actions/signin.actions"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
 // components
 import { InputField } from "@/components/common/InputField"
-// context
-import { useAuth } from "@/context/auth.context"
 // constants
 import { PATHS } from "@/constants/paths"
-
-// Submit 버튼 컴포넌트
-function SubmitButton() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full px-4 py-2 text-white bg-blue-500 rounded disabled:bg-blue-300"
-    >
-      {pending ? "잠시만 기다려주세요" : "로그인"}
-    </button>
-  )
-}
+// actions
+import { signin } from "@/actions/signin.actions"
 
 export function SigninForm() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
-  const [, startTransition] = useTransition()
-  const { errors, validateField } = useValidation()
-  const router = useRouter()
 
-  const { setAccessToken } = useAuth()
+  const [, startTransition] = useTransition()
+
+  const { errors, validateField } = useValidation()
+  const { pending } = useFormStatus()
+  const router = useRouter()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -54,19 +38,34 @@ export function SigninForm() {
 
     try {
       startTransition(async () => {
-        const result = await signin(formData)
+        const response = await signin({
+          email,
+          password,
+        })
 
-        if (result.success === false) {
-          return
-        }
-
-        if (result.accessToken) {
-          setAccessToken(result.accessToken)
+        if (!response.success) {
+          switch (response.errorCode) {
+            case "INVALID_INPUT":
+              setError("이메일과 비밀번호를 모두 입력해주세요.")
+              return
+            case "INVALID_CREDENTIALS":
+              setError("이메일 또는 비밀번호가 올바르지 않습니다.")
+              return
+            case "AUTH_ERROR":
+              setError("로그인에 문제가 발생했습니다. 다시 시도해주세요.")
+              return
+            default:
+              setError("알 수 없는 오류가 발생했습니다.")
+              return
+          }
         }
 
         setSuccess(true)
 
+        // 폼 초기화
         form.reset()
+
+        // 메인 페이지로 이동
         router.replace(PATHS.MAIN)
       })
     } catch (e) {
@@ -78,10 +77,12 @@ export function SigninForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* TODO: 토스트 처리 */}
       {error && (
         <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
       )}
 
+      {/* TODO: 토스트 처리 */}
       {success && (
         <div className="p-3 text-green-500 bg-green-100 rounded">
           로그인이 완료되었습니다!
@@ -116,7 +117,13 @@ export function SigninForm() {
         />
       </div>
 
-      <SubmitButton />
+      <button
+        type="submit"
+        disabled={pending}
+        className="w-full px-4 py-2 text-white bg-blue-500 rounded disabled:bg-blue-300"
+      >
+        {pending ? "잠시만 기다려주세요" : "Login"}
+      </button>
     </form>
   )
 }

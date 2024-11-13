@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { cn } from "@/lib/utils/cn"
+import { cn } from "@/utils/cn"
 
 type ButtonVariant = "primary" | "secondary" | "outline"
 type ButtonSize = "sm" | "md" | "lg"

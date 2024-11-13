@@ -1,7 +1,8 @@
 export const PATHS = {
   MAIN: "/",
   SIGNUP: "/signup",
-  SINGIN: "/signin",
+  SIGNIN: "/signin",
+  SIGNOUT: "/signout",
   PROFILE: "/profile",
   ANSWER: {
     byId: (questionId: number) => `/question/${questionId}/answer`,

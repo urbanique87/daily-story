@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { validateEmail, validatePassword } from "@/lib/utils/validation"
+import { validateEmail, validatePassword } from "@/utils/validation"
 
 export function useValidation() {
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({})

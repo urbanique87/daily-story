@@ -2,11 +2,11 @@ import jwt from "jsonwebtoken"
 
 export const AUTH_CONFIG = {
   ACCESS_TOKEN: {
-    EXPIRES_IN: "1h",
+    EXPIRES_IN: "10s",
     ALGORITHM: "HS256" as const,
   },
   REFRESH_TOKEN: {
-    EXPIRES_IN: "14d",
+    EXPIRES_IN: "1m",
     ALGORITHM: "HS256" as const,
   },
   PASSWORD: {
@@ -16,7 +16,7 @@ export const AUTH_CONFIG = {
 } as const
 
 export interface TokenPayload {
-  id: number
+  id: string
   email: string
   type: "access" | "refresh"
 }
@@ -35,8 +35,8 @@ export class TokenService {
   private refreshTokenSecret: string
 
   constructor() {
-    this.accessTokenSecret = getEnv("NEXT_PUBLIC_ACCESS_TOKEN_SECRET")
-    this.refreshTokenSecret = getEnv("NEXT_PUBLIC_REFRESH_TOKEN_SECRET")
+    this.accessTokenSecret = getEnv("ACCESS_TOKEN_SECRET")
+    this.refreshTokenSecret = getEnv("REFRESH_TOKEN_SECRET")
   }
 
   // 토큰 생성
@@ -45,7 +45,7 @@ export class TokenService {
     type: TokenPayload["type"]
   ): {
     token: string
-    expiresAt: number
+    expires: number
   } {
     const config =
       type === "access" ? AUTH_CONFIG.ACCESS_TOKEN : AUTH_CONFIG.REFRESH_TOKEN
@@ -61,9 +61,9 @@ export class TokenService {
 
       // 토큰의 exp 클레임 추출
       const decoded = jwt.decode(token) as jwt.JwtPayload
-      const expiresAt = decoded.exp!
+      const expires = decoded.exp!
 
-      return { token, expiresAt }
+      return { token, expires }
     } catch (error) {
       console.error(error)
       throw new Error("토큰 생성 중 오류가 발생했습니다.")

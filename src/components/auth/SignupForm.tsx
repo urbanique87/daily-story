@@ -4,13 +4,11 @@ import { FormEvent, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
 // actions
-import { signup } from "@/actions/auth.actions"
+import { signup } from "@/actions/signup.actions"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
 // components
 import { InputField } from "@/components/common/InputField"
-// context
-import { useAuth } from "@/context/auth.context"
 // constants
 import { PATHS } from "@/constants/paths"
 
@@ -36,8 +34,6 @@ export function SignupForm() {
   const { errors, validateField } = useValidation()
   const router = useRouter()
 
-  const { setAccessToken } = useAuth()
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -54,9 +50,22 @@ export function SignupForm() {
 
     try {
       startTransition(async () => {
-        const result = await signup(formData)
-        if (result.accessToken) {
-          setAccessToken(result.accessToken)
+        const response = await signup(formData)
+        if (!response.success) {
+          switch (response.errorCode) {
+            case "MISSING_FIELDS":
+              setError("이메일과 비밀번호는 필수입니다.")
+              return
+            case "INVALID_FORMAT":
+              setError("잘못된 입력 형식입니다.")
+              return
+            case "USER_EXISTS":
+              setError("이미 존재하는 사용자입니다.")
+              return
+            default:
+              setError("알 수 없는 오류가 발생했습니다.")
+              return
+          }
         }
 
         setSuccess(true)

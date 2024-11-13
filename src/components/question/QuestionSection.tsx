@@ -27,7 +27,7 @@ export default function QuestionSection() {
     const fetchData = async () => {
       try {
         setIsLoading(true)
-        const response = await axios.get("/api/questions")
+        const response = await axios.get("/api/question")
         setQuestionData(response.data)
       } catch (error) {
         setError("질문을 불러오는데 실패했습니다.")
@@ -42,7 +42,7 @@ export default function QuestionSection() {
 
   if (isLoading) {
     return (
-      <div role="status" aria-live="polite">
+      <div className="px-5" role="status" aria-live="polite">
         Loading...
       </div>
     )

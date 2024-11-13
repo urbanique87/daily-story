@@ -1,6 +1,7 @@
 # Daily Story
 
-Daily Story는 사용자가 매일 제공되는 질문에 답하며 자신을 표현하고 성장을 기록하는 웹 애플리케이션입니다.
+Daily Story는 사용자가 매일 제공되는 질문에 답하며 자신을 표현하고 성장을 기록하는 웹 애플리케이션입니다.  
+프로젝트의 구체적인 기획과 로드맵에 대한 내용은 <a href="https://quirky-kick-0ca.notion.site/Project-Daily-Story-13cfd988fe5a80699d84d6d87126f736?pvs=74" target="_blank">기획 문서</a>에서 확인하실 수 있습니다.
 
 ## 🎯 Project Overview
 

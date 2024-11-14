@@ -3,8 +3,9 @@ import { authConfig } from "./lib/auth/auth.config"
 import { NextRequest, NextResponse } from "next/server"
 import { PATHS } from "./constants/paths"
 
+const { auth, signOut } = NextAuth(authConfig)
+
 export async function middleware(request: NextRequest) {
-  const { auth, signOut } = NextAuth(authConfig)
   const session = await auth()
   if (session?.error === "RefreshToken expired") {
     // 로그아웃 처리

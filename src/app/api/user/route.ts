@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server"
 // mocks
 import jwt, { type JwtPayload } from "jsonwebtoken"
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, User } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request
+): Promise<NextResponse<User | { message: string }>> {
   try {
     const Authorization = request.headers.get("Authorization")
     if (!Authorization) {
@@ -15,7 +17,8 @@ export async function GET(request: Request) {
       )
     }
 
-    const token = Authorization.split(" ")[1] // Bearer token 추출
+    // Bearer token 추출
+    const token = Authorization.split(" ")[1]
 
     // JWT 검증
     const decoded = jwt.verify(

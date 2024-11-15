@@ -13,10 +13,9 @@ interface QuestionHeaderProps {
 /**
  * 질문 페이지 헤더
  */
-export default async function QuestionHeader({ session }: QuestionHeaderProps) {
+export default function QuestionHeader({ session }: QuestionHeaderProps) {
   const name = session.user.name || "Guest"
-  const image =
-    session.user?.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
+  const image = session.user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
 
   return (
     <header

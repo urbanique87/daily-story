@@ -1,9 +1,12 @@
 import { PATHS } from "@/constants/paths"
-import { Heading } from "../ui/typography/Heading"
-import { Text } from "../ui/typography/Text"
-import { TextLink } from "../ui/link/TextLink"
-// import { Button } from "../ui/button/TextButton"
+// components
+import { Heading } from "@/components/ui/typography/Heading"
+import { Text } from "@/components/ui/typography/Text"
+import { TextLink } from "@/components/ui/link/TextLink"
 
+/**
+ * 회원가입, 로그인 메뉴 컴포넌트
+ */
 export default function AuthMenu() {
   return (
     <div className="flex items-center justify-center min-h-dvh">
@@ -19,10 +22,6 @@ export default function AuthMenu() {
         </Text>
 
         <div className="flex flex-col">
-          {/* <Button variant="primary" size="md" className="mb-2">
-            게스트로 시작
-          </Button> */}
-
           <TextLink
             variant="body"
             size="md"

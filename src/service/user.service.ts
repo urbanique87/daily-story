@@ -1,5 +1,5 @@
 // types
-import { User } from "@/types/user"
+import { User } from "@/types/user.types"
 
 export async function getUser() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {

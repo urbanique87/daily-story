@@ -17,11 +17,11 @@ export default async function MainPage() {
 
   const question = await fetchQuestion()
   return (
-    <>
+    <main className="max-w-[960px] px-4 mx-auto">
       <QuestionHeader session={session} />
       <div className="py-6">
         <QuestionSection question={question} />
       </div>
-    </>
+    </main>
   )
 }

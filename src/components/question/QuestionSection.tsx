@@ -12,7 +12,6 @@ import { Question } from "@/types/question.types"
 export default function QuestionSection({ question }: { question: Question }) {
   return (
     <section
-      className="px-5"
       role="region"
       aria-labelledby="question-section-title"
       data-testid="question-section"

@@ -1,44 +1,37 @@
-import Link from "next/link"
 // libs
 import { getTimeBasedGreeting } from "@/lib/getTimeBasedGreeting"
-// constants
-import { PATHS } from "@/constants/paths"
 // type
 import type { Session } from "next-auth"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar"
 
 /**
  * 질문 페이지 헤더
  */
 export default function QuestionHeader({ session }: { session: Session }) {
-  const name = session.user.name || "Guest"
-  const image = session.user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
+  const user = session.user
+  const name = user.name || "Guest"
+  const image = user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
 
   return (
     <header
       role="banner"
-      className="flex justify-between items-center h-20 px-5"
+      className="flex justify-between items-center h-20"
       data-testid="question-header"
     >
-      <section className="flex flex-col">
-        <div className="text-xs">
-          <span className="mr-1">Hi!</span>
-          <span>{name}</span>
-        </div>
-        <p className="text-lg font-medium">{getTimeBasedGreeting()}</p>
-      </section>
+      <div className="flex gap-4">
+        <Avatar className="w-[50px] h-[50px]">
+          <AvatarImage src={image} alt={`${name} profile`} />
+          <AvatarFallback>{name[0]}</AvatarFallback>
+        </Avatar>
 
-      <Link
-        className="w-12 h-12 rounded-full overflow-hidden"
-        aria-label={`${name}의 프로필로 이동`}
-        href={PATHS.PROFILE}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="w-full h-full object-cover"
-          src={image}
-          alt={`${name} profile`}
-        />
-      </Link>
+        <section className="flex flex-col">
+          <div className="text-xs">
+            <span className="mr-1">Hi!</span>
+            <span>{name}</span>
+          </div>
+          <p className="text-lg font-medium">{getTimeBasedGreeting()}</p>
+        </section>
+      </div>
     </header>
   )
 }

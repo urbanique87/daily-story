@@ -1,12 +1,8 @@
 import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
 // constants
-import { PATHS } from "@/constants/paths"
 import { TIME_RANGES } from "@/constants/greetings"
-// mocks
-import { pushMock } from "@/__tests__/setup"
 
 const MOCK_SESSION = {
   user: {
@@ -96,23 +92,5 @@ describe("QuestionHeader Component", () => {
         jest.restoreAllMocks()
       }
     )
-  })
-
-  describe("Link Test", () => {
-    beforeEach(() => {
-      render(<QuestionHeader session={MOCK_SESSION} />)
-    })
-
-    it("프로필 링크가 올바른 경로를 가져야 한다.", () => {
-      expect(screen.getByRole("link")).toHaveAttribute("href", PATHS.PROFILE)
-    })
-
-    it("프로필 이미지 (링크) 클릭 시 프로필 페이지로 이동해야 한다.", async () => {
-      const user = userEvent.setup()
-
-      const image = screen.getByRole("img")
-      await user.click(image)
-      expect(pushMock).toHaveBeenCalledWith(PATHS.PROFILE)
-    })
   })
 })

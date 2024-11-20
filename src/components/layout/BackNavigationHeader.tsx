@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 // constants
 import { PATHS } from "@/constants/paths"
 
-export default function Header() {
+export default function BackNavigationHeader() {
   const router = useRouter()
 
   const handleBackClick = () => {

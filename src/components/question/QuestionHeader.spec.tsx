@@ -1,8 +1,31 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor, act } from "@testing-library/react"
 // components
 import QuestionHeader from "@/components/question/QuestionHeader"
 // constants
 import { TIME_RANGES } from "@/constants/greetings"
+
+// Mock Image constructor
+const mockImage = {
+  onload: null as (() => void) | null,
+  onerror: null as (() => void) | null,
+  src: "",
+}
+
+// @ts-ignore
+global.Image = class {
+  onload: (() => void) | null = null
+  onerror: (() => void) | null = null
+  src: string = ""
+
+  constructor() {
+    Object.assign(this, mockImage)
+    setTimeout(() => {
+      if (this.onload) {
+        this.onload()
+      }
+    }, 0)
+  }
+}
 
 const MOCK_SESSION = {
   user: {
@@ -58,7 +81,7 @@ describe("QuestionHeader Component", () => {
       expect(screen.getByText("Guest")).toBeInTheDocument()
     })
 
-    it("프로필 이미지가 없을 경우 기본 이미지로 표시되어야 한다.", () => {
+    it("프로필 이미지가 없을 경우 기본 이미지로 표시되어야 한다.", async () => {
       const sessionWithoutImage = {
         ...MOCK_SESSION,
         user: {
@@ -68,17 +91,39 @@ describe("QuestionHeader Component", () => {
       }
 
       render(<QuestionHeader session={sessionWithoutImage} />)
+
+      const initial = sessionWithoutImage.user.name[0].toUpperCase()
+      // 초기에는 Fallback이 보여야 함
+      expect(screen.getByText(initial)).toBeInTheDocument()
+
+      // 이미지 로딩이 완료될 때까지 기다림
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0))
+      })
+
+      // 기본 이미지가 로드될 때까지 기다린 후, 기본 이미지로 확인
+      await waitFor(() => {
+        const img = screen.getByRole("img")
+        expect(img).toHaveAttribute(
+          "src",
+          process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
+        )
+      })
+
       expect(screen.getByRole("img")).toHaveAttribute(
         "src",
         process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
       )
     })
 
-    it("프로필 이미지에 적절한 alt 텍스트가 있어야 한다", () => {
+    it("프로필 이미지에 적절한 alt 텍스트가 있어야 한다", async () => {
       render(<QuestionHeader session={MOCK_SESSION} />)
-      const img = screen.getByRole("img")
-      expect(img).toHaveAttribute("alt", expect.any(String))
-      expect(img.getAttribute("alt")).not.toBe("")
+
+      await waitFor(() => {
+        const img = screen.getByRole("img")
+        expect(img).toHaveAttribute("alt", expect.any(String))
+        expect(img.getAttribute("alt")).not.toBe("")
+      })
     })
 
     it.each(TIME_RANGES.map(({ start, greeting }) => [start, greeting]))(

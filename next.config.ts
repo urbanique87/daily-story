@@ -1,12 +1,11 @@
 import type { NextConfig } from "next"
 
+const isProd = process.env.NODE_ENV === "production"
+
 const nextConfig: NextConfig = {
-  // compiler: {
-  //   removeConsole: {
-  //     exclude: process.env.NODE_ENV === "development" ? ["log"] : ["error"],
-  //   },
-  // },
-  /* config options here */
+  compiler: {
+    removeConsole: isProd ? { exclude: ["error", "warn"] } : false,
+  },
 }
 
 export default nextConfig

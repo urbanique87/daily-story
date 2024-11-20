@@ -34,22 +34,22 @@ describe("QuestionHeader Component", () => {
   })
 
   describe("Rendering Test", () => {
-    it("헤더 컴포넌트가 렌더링되어야 한다.", () => {
+    it("헤더 컴포넌트가 렌더링 되어야 한다.", () => {
       render(<QuestionHeader session={MOCK_SESSION} />)
       expect(screen.getByRole("banner")).toBeInTheDocument()
     })
 
-    it("기본 인사말이 올바르게 렌더링되어야 한다.", () => {
+    it("기본 인사말이 올바르게 렌더링 되어야 한다.", () => {
       render(<QuestionHeader session={MOCK_SESSION} />)
       expect(screen.getByText(/Hi/)).toBeInTheDocument()
     })
 
-    it("사용자의 닉네임이 렌더링되어야 한다.", () => {
+    it("사용자의 닉네임이 렌더링 되어야 한다.", () => {
       render(<QuestionHeader session={MOCK_SESSION} />)
       expect(screen.getByText("Test User")).toBeInTheDocument()
     })
 
-    it("사용자 닉네임이 없을 경우, 'Guest'가 렌더링되어야 한다.", () => {
+    it("사용자 닉네임이 없을 경우, 'Guest'가 렌더링 되어야 한다.", () => {
       const sessionWithoutName = {
         ...MOCK_SESSION,
         user: {

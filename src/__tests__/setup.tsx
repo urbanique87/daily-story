@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom"
 
+// fetch를 Jest mock function으로 설정
+global.fetch = jest.fn() as jest.Mock
+
 export const pushMock = jest.fn()
 
 jest.mock("next/navigation", () => ({

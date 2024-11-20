@@ -1,8 +1,4 @@
-"use client"
-
-// import { useEffect, useState } from "react"
 import Link from "next/link"
-// import axios from "axios"
 // libs
 import { formatCustomDate } from "@/lib/dateFormatter"
 // constants
@@ -19,6 +15,7 @@ export default function QuestionSection({ question }: { question: Question }) {
       className="px-5"
       role="region"
       aria-labelledby="question-section-title"
+      data-testid="question-section"
     >
       <p className="mb-1 text-sm text-gray-400">
         {formatCustomDate(question.date)}

@@ -6,14 +6,10 @@ import { PATHS } from "@/constants/paths"
 // type
 import type { Session } from "next-auth"
 
-interface QuestionHeaderProps {
-  session: Session
-}
-
 /**
  * 질문 페이지 헤더
  */
-export default function QuestionHeader({ session }: QuestionHeaderProps) {
+export default function QuestionHeader({ session }: { session: Session }) {
   const name = session.user.name || "Guest"
   const image = session.user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
 
@@ -21,6 +17,7 @@ export default function QuestionHeader({ session }: QuestionHeaderProps) {
     <header
       role="banner"
       className="flex justify-between items-center h-20 px-5"
+      data-testid="question-header"
     >
       <section className="flex flex-col">
         <div className="text-xs">

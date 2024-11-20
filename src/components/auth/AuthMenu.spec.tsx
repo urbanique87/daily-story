@@ -14,12 +14,12 @@ describe("AuthMenu Component", () => {
   })
 
   describe("Rendering Test", () => {
-    it("이모지가 올바르게 렌더링되어야 한다.", () => {
+    it("이모지가 올바르게 렌더링 되어야 한다.", () => {
       const emoji = screen.getByText("✍️")
       expect(emoji).toBeInTheDocument()
     })
 
-    it("제목과 설명이 올바르게 렌더링되어야 한다.", () => {
+    it("제목과 설명이 올바르게 렌더링 되어야 한다.", () => {
       const heading = screen.getByRole("heading", {
         name: "Daily Story",
         level: 1,

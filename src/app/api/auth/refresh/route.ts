@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server"
 import jwt, { type JwtPayload } from "jsonwebtoken"
-import { PrismaClient } from "@prisma/client"
+// lib
+import { prisma } from "@/lib/prisma"
 // service
-import { TokenService } from "@/service/token.service"
-
-const prisma = new PrismaClient()
+import { TokenService } from "@/lib/auth/token.service"
 
 const secretKey = process.env.REFRESH_TOKEN_SECRET
 

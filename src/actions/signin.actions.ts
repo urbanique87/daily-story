@@ -4,6 +4,7 @@ import { AuthError } from "next-auth"
 import { revalidatePath } from "next/cache"
 // lib
 import { signIn } from "@/lib/auth"
+import { PATHS } from "@/constants/paths"
 
 interface SignininProps {
   email: string
@@ -27,7 +28,7 @@ export async function signin({ email, password }: SignininProps) {
     })
 
     // 페이지 데이터 갱신
-    revalidatePath("/signin")
+    revalidatePath(PATHS.SIGNIN)
 
     return { success: true }
   } catch (error) {

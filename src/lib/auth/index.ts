@@ -1,8 +1,13 @@
 import NextAuth from "next-auth"
 import { AuthError } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-// utils
+import { PrismaAdapter } from "@auth/prisma-adapter"
+// service
+import { fetchTokens } from "@/service/token.service"
+// lib
+import { prisma } from "@/lib/prisma"
 import { getUserFromDb } from "@/lib/db"
+// config
 import { authConfig } from "@/lib/auth/auth.config"
 
 class CustomError extends AuthError {
@@ -13,15 +18,9 @@ class CustomError extends AuthError {
   }
 }
 
-interface TokensResponse {
-  accessToken: string
-  accessTokenExpires: number
-  refreshToken: string
-  refreshTokenExpires: number
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
+  adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
       credentials: {
@@ -34,35 +33,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const password = credentials?.password as string
 
           const user = await getUserFromDb(email, password)
-
           if (!user) {
             throw new CustomError("INVALID_CREDENTIALS")
           }
 
-          // 액세스 토큰, 리프레시 토큰 발급
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/tokens`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                id: user.id,
-                email,
-              }),
-            }
-          )
-
-          const result = await response.json()
-          const tokens: TokensResponse = result.data
+          const response = await fetchTokens({
+            userId: user.id,
+            email,
+          })
 
           return {
             ...user,
-            accessToken: tokens.accessToken,
-            accessTokenExpires: tokens.accessTokenExpires,
-            refreshToken: tokens.refreshToken,
-            refreshTokenExpires: tokens.refreshTokenExpires,
+            accessToken: response.accessToken,
+            accessTokenExpires: response.accessTokenExpires,
+            refreshToken: response.refreshToken,
+            refreshTokenExpires: response.refreshTokenExpires,
           }
         } catch (error) {
           if (error instanceof AuthError) {

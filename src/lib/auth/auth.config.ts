@@ -1,14 +1,10 @@
 import type { NextAuthConfig } from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-// lib
-import { prisma } from "@/lib/prisma"
 // constants
 import { PATHS } from "@/constants/paths"
-import { refreshAccessToken } from "./tokens"
+// services
+import { refreshAccessToken } from "@/service/auth.service"
 
 export const authConfig: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
-  debug: process.env.NODE_ENV === "development" ? false : true,
   pages: {
     signIn: PATHS.SIGNIN,
     signOut: PATHS.SIGNOUT,
@@ -36,7 +32,6 @@ export const authConfig: NextAuthConfig = {
       // 액세스토큰이 만료되었다면, 리프레시토큰으로 재발급을 받는다.
       const refreshedToken = await refreshAccessToken({
         refreshToken: token.refreshToken as string,
-        refreshTokenExpires: token.refreshTokenExpires as number,
       })
 
       if (!refreshedToken) {

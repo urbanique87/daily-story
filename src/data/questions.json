@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "question": "오늘은 뭐했어?",
+    "category": "일상"
+  },
+  {
+    "id": 2,
+    "question": "오늘 가장 기억에 남는 순간은 뭐야?",
+    "category": "일상"
+  },
+  {
+    "id": 3,
+    "question": "내일 어떤 계획이 있니?",
+    "category": "미래"
+  },
+  {
+    "id": 4,
+    "question": "10년 후의 나는 무엇을 하고 있을까?",
+    "category": "미래"
+  },
+  {
+    "id": 5,
+    "question": "어떤 취미를 새로 시작하고 싶어?",
+    "category": "취미"
+  },
+  {
+    "id": 6,
+    "question": "요즘 가장 즐거운 취미는 뭐야?",
+    "category": "취미"
+  },
+  {
+    "id": 7,
+    "question": "너 자신에 대해 가장 자랑스러운 점은 뭐야?",
+    "category": "자아"
+  },
+  {
+    "id": 8,
+    "question": "최근에 나 자신을 위해 한 일이 있다면?",
+    "category": "자아"
+  },
+  {
+    "id": 9,
+    "question": "요즘 자주 생각나는 사람은 누구야?",
+    "category": "인간관계"
+  },
+  {
+    "id": 10,
+    "question": "친구와 가장 재미있었던 기억은 뭐야?",
+    "category": "인간관계"
+  },
+  {
+    "id": 11,
+    "question": "오늘 느낀 감정 중 가장 강렬했던 것은?",
+    "category": "감정"
+  },
+  {
+    "id": 12,
+    "question": "지금 기분을 한 단어로 표현한다면?",
+    "category": "감정"
+  },
+  {
+    "id": 13,
+    "question": "가장 좋아하는 여행지는 어디야?",
+    "category": "여행"
+  },
+  {
+    "id": 14,
+    "question": "가장 가보고 싶은 나라는?",
+    "category": "여행"
+  },
+  {
+    "id": 15,
+    "question": "하루 종일 하고 싶은 일이 있다면?",
+    "category": "생각"
+  },
+  {
+    "id": 16,
+    "question": "최근에 읽은 책 중 가장 기억에 남는 한 문장은?",
+    "category": "생각"
+  },
+  {
+    "id": 17,
+    "question": "오늘의 날씨는 어땠어?",
+    "category": "일상"
+  },
+  {
+    "id": 18,
+    "question": "오늘 먹은 음식 중 가장 맛있었던 것은?",
+    "category": "일상"
+  },
+  {
+    "id": 19,
+    "question": "5년 후 꼭 이루고 싶은 목표는?",
+    "category": "미래"
+  },
+  {
+    "id": 20,
+    "question": "내일 나를 위해 해주고 싶은 건?",
+    "category": "미래"
+  },
+  {
+    "id": 21,
+    "question": "가장 최근에 본 영화나 드라마는 뭐야?",
+    "category": "취미"
+  },
+  {
+    "id": 22,
+    "question": "가장 좋아하는 음악 장르는?",
+    "category": "취미"
+  },
+  {
+    "id": 23,
+    "question": "내가 생각하는 나의 강점은?",
+    "category": "자아"
+  },
+  {
+    "id": 24,
+    "question": "다시 돌아가고 싶은 순간이 있다면?",
+    "category": "자아"
+  },
+  {
+    "id": 25,
+    "question": "오늘 만난 사람 중 가장 기억에 남는 사람은?",
+    "category": "인간관계"
+  },
+  {
+    "id": 26,
+    "question": "요즘 친구들과 자주 이야기하는 주제는?",
+    "category": "인간관계"
+  },
+  {
+    "id": 27,
+    "question": "오늘 웃게 만든 일이 있다면?",
+    "category": "감정"
+  },
+  {
+    "id": 28,
+    "question": "요즘 스트레스를 가장 많이 받는 이유는?",
+    "category": "감정"
+  },
+  {
+    "id": 29,
+    "question": "최근에 갔던 여행지 중 가장 좋았던 곳은?",
+    "category": "여행"
+  },
+  {
+    "id": 30,
+    "question": "다음에 꼭 가보고 싶은 여행 계획이 있다면?",
+    "category": "여행"
+  },
+  {
+    "id": 31,
+    "question": "내가 원하는 완벽한 하루는 어떤 모습일까?",
+    "category": "생각"
+  },
+  {
+    "id": 32,
+    "question": "평소 나를 가장 행복하게 해주는 일은?",
+    "category": "생각"
+  },
+  {
+    "id": 33,
+    "question": "오늘 들은 가장 좋은 말은?",
+    "category": "일상"
+  },
+  {
+    "id": 34,
+    "question": "오늘 있었던 소소한 기쁨이 있다면?",
+    "category": "일상"
+  },
+  {
+    "id": 35,
+    "question": "앞으로 배우고 싶은 기술이나 능력은?",
+    "category": "미래"
+  },
+  {
+    "id": 36,
+    "question": "가장 이루고 싶은 꿈은 무엇이야?",
+    "category": "미래"
+  },
+  {
+    "id": 37,
+    "question": "최근에 시도해본 새로운 취미는?",
+    "category": "취미"
+  },
+  {
+    "id": 38,
+    "question": "평소 시간을 가장 많이 보내는 취미는?",
+    "category": "취미"
+  },
+  {
+    "id": 39,
+    "question": "나만의 특별한 습관이 있다면?",
+    "category": "자아"
+  },
+  {
+    "id": 40,
+    "question": "나를 잘 표현해주는 한 단어는?",
+    "category": "자아"
+  },
+  {
+    "id": 41,
+    "question": "요즘 가장 자주 만나는 사람은 누구야?",
+    "category": "인간관계"
+  },
+  {
+    "id": 42,
+    "question": "친구에게 고마웠던 순간은 언제야?",
+    "category": "인간관계"
+  },
+  {
+    "id": 43,
+    "question": "오늘 슬펐던 일이 있다면?",
+    "category": "감정"
+  },
+  {
+    "id": 44,
+    "question": "가장 최근에 설렜던 일은?",
+    "category": "감정"
+  },
+  {
+    "id": 45,
+    "question": "가보고 싶은 국내 여행지는?",
+    "category": "여행"
+  },
+  {
+    "id": 46,
+    "question": "가장 기억에 남는 여행은 어디였어?",
+    "category": "여행"
+  },
+  {
+    "id": 47,
+    "question": "오늘 하루를 한 문장으로 요약한다면?",
+    "category": "생각"
+  },
+  {
+    "id": 48,
+    "question": "최근에 가장 감사했던 일은?",
+    "category": "생각"
+  }
+]

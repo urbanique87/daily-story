@@ -18,6 +18,8 @@ model User {
   sessions      Session[]
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  Answers Answer[]
 }
  
 model Account {
@@ -39,7 +41,7 @@ model Account {
  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
-  @@unique([provider, providerAccountId])
+  @@unique([userId, provider, providerAccountId])
 }
  
 model Session {
@@ -59,4 +61,32 @@ model VerificationToken {
   expires    DateTime
  
   @@unique([identifier, token])
+}
+
+model Question {
+  id          Int          @id @default(autoincrement())
+  question    String       @unique
+  category    String
+  createdAt DateTime       @default(now())
+
+  Answers Answer[]
+
+  @@index([category])
+}
+
+model Answer {
+  id                 Int       @id @default(autoincrement())
+  userId             String
+  questionId         Int
+  answer             String?
+  assignedAt         DateTime  @default(now())
+  answeredAt         DateTime?
+  updatedAt          DateTime? @updatedAt
+  deletedAt          DateTime?
+  isPublic           Boolean   @default(true)
+
+  user               User      @relation(fields: [userId], references: [id])
+  question           Question  @relation(fields: [questionId], references: [id])
+
+  @@unique([userId, questionId])
 }

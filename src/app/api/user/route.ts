@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
 // mocks
 import jwt, { type JwtPayload } from "jsonwebtoken"
-import { PrismaClient, User } from "@prisma/client"
-
-const prisma = new PrismaClient()
+// lib
+import { prisma } from "@/lib/prisma"
+// types
+import type { User } from "@prisma/client"
 
 export async function GET(
   request: Request

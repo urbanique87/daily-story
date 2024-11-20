@@ -65,8 +65,17 @@ export function SigninForm() {
         // 폼 초기화
         form.reset()
 
-        // 메인 페이지로 이동
-        router.replace(PATHS.MAIN)
+        // 로그인 후, callbackUrl이 있다면 해당 URL로 리다이렉트
+        const callbackUrl = new URLSearchParams(window.location.search).get(
+          "callbackUrl"
+        )
+        if (callbackUrl) {
+          // callbackUrl이 있으면 해당 URL로 리다이렉트
+          router.replace(callbackUrl)
+        } else {
+          // 기본 메인 페이지로 이동
+          router.replace(PATHS.MAIN)
+        }
       })
     } catch (e) {
       setError(

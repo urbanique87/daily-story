@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 // services
-import { TokenService } from "@/service/token.service"
+import { TokenService } from "@/lib/auth/token.service"
 
 interface UserCredentials {
   id: string

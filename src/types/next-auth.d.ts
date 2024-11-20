@@ -1,6 +1,11 @@
-import { DefaultUser, DefaultSession } from "next-auth"
+import type { NextRequest } from "next/server"
+import type { DefaultUser, DefaultSession } from "next-auth"
 
 declare module "next-auth" {
+  export interface NextAuthRequest extends NextRequest {
+    auth: Session | null
+  }
+
   interface User extends DefaultUser {
     id: string
     email: string

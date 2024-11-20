@@ -1,4 +1,8 @@
 export function formatCustomDate(dateString: string): string {
+  if (!dateString) {
+    return ""
+  }
+
   const date = new Date(dateString)
   if (isNaN(date.getTime())) {
     throw new Error("유효하지 않은 날짜 형식입니다.")

@@ -6,9 +6,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { fetchTokens } from "@/services/token.service"
 // lib
 import { prisma } from "@/lib/prisma"
-import { getUserFromDb } from "@/lib/db"
 // config
 import { authConfig } from "@/lib/auth/auth.config"
+import { authenticateUser } from "@/services/user.service"
 
 class CustomError extends AuthError {
   constructor(code: string) {
@@ -32,18 +32,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const email = credentials?.email as string
           const password = credentials?.password as string
 
-          const user = await getUserFromDb(email, password)
-          if (!user) {
+          const result = await authenticateUser({ email, password })
+          if (!result.data) {
             throw new CustomError("INVALID_CREDENTIALS")
           }
 
           const response = await fetchTokens({
-            userId: user.id,
+            userId: result.data.id,
             email,
           })
 
           return {
-            ...user,
+            ...result.data,
             accessToken: response.accessToken,
             accessTokenExpires: response.accessTokenExpires,
             refreshToken: response.refreshToken,

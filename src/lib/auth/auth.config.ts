@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth"
 // constants
 import { PATHS } from "@/constants/paths"
 // services
-import { refreshAccessToken } from "@/service/auth.service"
+import { refreshAccessToken } from "@/services/auth.service"
 
 export const authConfig: NextAuthConfig = {
   pages: {

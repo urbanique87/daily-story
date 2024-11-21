@@ -9,8 +9,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar"
  */
 export default function QuestionHeader({ session }: { session: Session }) {
   const user = session.user
-  const name = user.name || "Guest"
-  const image = user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
+  const userName = user.name || "Guest"
+  const userInitial = user.name || user.email || "Guest"
+  const profileImage = user.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
 
   return (
     <header
@@ -20,14 +21,14 @@ export default function QuestionHeader({ session }: { session: Session }) {
     >
       <div className="flex gap-4">
         <Avatar className="w-[50px] h-[50px]">
-          <AvatarImage src={image} alt={`${name} profile`} />
-          <AvatarFallback>{name[0]}</AvatarFallback>
+          <AvatarImage src={profileImage} alt={`${userName} profile`} />
+          <AvatarFallback>{userInitial[0]}</AvatarFallback>
         </Avatar>
 
         <section className="flex flex-col">
           <div className="text-xs">
             <span className="mr-1">Hi!</span>
-            <span>{name}</span>
+            <span>{userName}</span>
           </div>
           <p className="text-lg font-medium">{getTimeBasedGreeting()}</p>
         </section>

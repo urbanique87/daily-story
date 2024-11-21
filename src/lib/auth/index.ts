@@ -3,7 +3,7 @@ import { AuthError } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 // service
-import { fetchTokens } from "@/service/token.service"
+import { fetchTokens } from "@/services/token.service"
 // lib
 import { prisma } from "@/lib/prisma"
 import { getUserFromDb } from "@/lib/db"

@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react"
 // components
 import MainPage from "@/app/page"
-// ㅣib
+// lib
 import { auth } from "@/lib/auth"
-// api
-import { fetchQuestion } from "@/service/question.service"
+// services
+import { getOrCreateTodayQuestion } from "@/services/question.service"
 
 jest.mock("@/lib/auth", () => ({
   auth: jest.fn(),
 }))
 
-jest.mock("@/service/question.service", () => ({
-  fetchQuestion: jest.fn(),
+jest.mock("@/services/question.service", () => ({
+  getOrCreateTodayQuestion: jest.fn(),
 }))
 
 const MOCK_QUESTION = {
@@ -41,7 +41,7 @@ describe("MainPage Component", () => {
 
   it("사용자가 인증되었을 경우, QuestionHeader component와 QuestionSection component가 렌더링 되어야 한다.", async () => {
     ;(auth as jest.Mock).mockResolvedValue(MOCK_SESSION)
-    ;(fetchQuestion as jest.Mock).mockResolvedValue(MOCK_QUESTION)
+    ;(getOrCreateTodayQuestion as jest.Mock).mockResolvedValue(MOCK_QUESTION)
 
     render(await MainPage())
 
@@ -54,7 +54,9 @@ describe("MainPage Component", () => {
 
     // API 호출 실패 시 에러를 던지도록 설정
     const errorMessage = "Failed to fetch question"
-    ;(fetchQuestion as jest.Mock).mockRejectedValue(new Error(errorMessage))
+    ;(getOrCreateTodayQuestion as jest.Mock).mockRejectedValue(
+      new Error(errorMessage)
+    )
 
     // 에러가 throw되는지 확인
     await expect(MainPage()).rejects.toThrow(errorMessage)

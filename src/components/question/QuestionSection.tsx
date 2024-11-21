@@ -22,7 +22,9 @@ export default function QuestionSection({ question }: { question: Question }) {
       <p className="mb-1 text-base">
         오늘의 <span>{question.category}</span>
       </p>
+
       <h2 className="mb-7 text-2xl font-bold">{question.question}</h2>
+
       <Link
         className="block pb-1 text-sm border-b"
         aria-label={`오늘의 이야기 적기: ${question.question}`}

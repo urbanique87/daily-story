@@ -14,8 +14,8 @@ export default async function Header() {
   const session = await auth()
 
   const user = session?.user
-  const name = user?.name || user?.email || "Guest"
-  const image = user?.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
+  const userInitial = user?.name || user?.email || "Guest"
+  const profileImage = user?.image || process.env.NEXT_PUBLIC_DEFAULT_USER_IMAGE
 
   return (
     <header>
@@ -34,8 +34,11 @@ export default async function Header() {
               <li>
                 <Link href={PATHS.PROFILE}>
                   <Avatar>
-                    <AvatarImage src={image} alt={`${name} 프로필 이미지`} />
-                    <AvatarFallback>{name[0]}</AvatarFallback>
+                    <AvatarImage
+                      src={profileImage}
+                      alt={`${userInitial} profile`}
+                    />
+                    <AvatarFallback>{userInitial[0]}</AvatarFallback>
                   </Avatar>
                 </Link>
               </li>

@@ -6,7 +6,7 @@ import { SignupForm } from "@/components/auth/SignupForm"
  */
 export default async function SignupPage() {
   return (
-    <main className="max-w-[400px] px-5 py-7 mx-auto">
+    <main className="max-w-[960px] px-4 mx-auto">
       <SignupForm />
     </main>
   )

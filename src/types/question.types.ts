@@ -3,4 +3,5 @@ export interface Question {
   date: string
   category: string
   question: string
+  answer: string | null
 }

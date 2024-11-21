@@ -10,7 +10,7 @@ import { TextLink } from "@/components/ui/link/TextLink"
 export default function AuthMenu() {
   return (
     <div
-      className="flex items-center justify-center min-h-dvh"
+      className="flex justify-center pt-[150px] pb-[50px] md:pt-[250px] md:pb-[100px] transition-all duration-500 ease-in-out"
       data-testid="auth-menu"
     >
       <div className="text-center">

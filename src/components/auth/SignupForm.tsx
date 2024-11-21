@@ -81,42 +81,44 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && (
-        <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
-      )}
+    <div className="flex justify-center pt-[150px] pb-[50px] md:pt-[250px] md:pb-[100px] transition-all duration-500 ease-in-out">
+      <form className="w-full max-w-[400px]" onSubmit={handleSubmit}>
+        {error && (
+          <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
+        )}
 
-      {success && (
-        <div className="p-3 text-green-500 bg-green-100 rounded">
-          회원가입이 완료되었습니다!
+        {success && (
+          <div className="p-3 text-green-500 bg-green-100 rounded">
+            회원가입이 완료되었습니다!
+          </div>
+        )}
+
+        <div className="mb-1">
+          <InputField
+            id="email"
+            name="email"
+            type="email"
+            label="이메일"
+            onChange={(e) => validateField(e.target.name, e.target.value)}
+            error={errors.email}
+            required
+          />
         </div>
-      )}
 
-      <div className="mb-1">
-        <InputField
-          id="email"
-          name="email"
-          type="email"
-          label="이메일"
-          onChange={(e) => validateField(e.target.name, e.target.value)}
-          error={errors.email}
-          required
-        />
-      </div>
+        <div className="mb-1">
+          <InputField
+            id="password"
+            name="password"
+            type="password"
+            label="비밀번호"
+            onChange={(e) => validateField(e.target.name, e.target.value)}
+            error={errors.password}
+            required
+          />
+        </div>
 
-      <div className="mb-1">
-        <InputField
-          id="password"
-          name="password"
-          type="password"
-          label="비밀번호"
-          onChange={(e) => validateField(e.target.name, e.target.value)}
-          error={errors.password}
-          required
-        />
-      </div>
-
-      <SubmitButton />
-    </form>
+        <SubmitButton />
+      </form>
+    </div>
   )
 }

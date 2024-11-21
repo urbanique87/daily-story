@@ -1,14 +1,13 @@
-import NextAuth from "next-auth"
-import { AuthError } from "next-auth"
+import NextAuth, { AuthError } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-// service
-import { fetchTokens } from "@/services/token.service"
 // lib
 import { prisma } from "@/lib/prisma"
 // config
-import { authConfig } from "@/lib/auth/auth.config"
+import { nextAuthConfig } from "@/config/nextAuth.config"
+// service
 import { authenticateUser } from "@/services/user.service"
+import { generateTokenPair } from "@/services/token.service"
 
 class CustomError extends AuthError {
   constructor(code: string) {
@@ -19,7 +18,7 @@ class CustomError extends AuthError {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  ...authConfig,
+  ...nextAuthConfig,
   adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
@@ -32,22 +31,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const email = credentials?.email as string
           const password = credentials?.password as string
 
-          const result = await authenticateUser({ email, password })
-          if (!result.data) {
+          const user = await authenticateUser({ email, password })
+          if (!user.data) {
             throw new CustomError("INVALID_CREDENTIALS")
           }
 
-          const response = await fetchTokens({
-            userId: result.data.id,
+          const tokens = await generateTokenPair({
+            id: user.data.id,
             email,
           })
 
+          if (!tokens.data) {
+            throw new CustomError("FAIL_CREATE_TOKENS")
+          }
+
           return {
-            ...result.data,
-            accessToken: response.accessToken,
-            accessTokenExpires: response.accessTokenExpires,
-            refreshToken: response.refreshToken,
-            refreshTokenExpires: response.refreshTokenExpires,
+            ...user.data,
+            accessToken: tokens.data.access.token,
+            accessTokenExpires: tokens.data.access.expires,
+            refreshToken: tokens.data.refresh.token,
+            refreshTokenExpires: tokens.data.refresh.expires,
           }
         } catch (error) {
           if (error instanceof AuthError) {

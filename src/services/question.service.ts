@@ -1,5 +1,3 @@
-"use server"
-
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 // lib
 import { auth } from "@/lib/auth"
@@ -8,25 +6,6 @@ import { prisma } from "@/lib/prisma"
 import type { Question } from "@/types/question.types"
 import type { ApiResponse } from "@/types/response.types"
 import { ErrorCode } from "@/types/error.types"
-
-// ----------------------------------------------------------------------
-
-/**
- * 오늘의 질문 조회 - 없으면 새로운 질문 생성
- */
-export async function getOrCreateTodayQuestion() {
-  const todayQuestionResponse = await getTodayQuestion()
-  if (todayQuestionResponse.success) {
-    return todayQuestionResponse.data
-  }
-
-  const newQuestionResponse = await createTodayQuestion()
-  if (newQuestionResponse.success) {
-    return newQuestionResponse.data
-  }
-
-  return null
-}
 
 // ----------------------------------------------------------------------
 

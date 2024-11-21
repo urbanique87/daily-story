@@ -1,5 +1,3 @@
-"use server"
-
 import bcrypt from "bcrypt"
 // lib
 import { prisma } from "@/lib/prisma"

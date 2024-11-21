@@ -5,8 +5,8 @@ import QuestionSectionFallback from "@/components/question/QuestionSection.fallb
 import AuthMenu from "@/components/auth/AuthMenu"
 // lib
 import { auth } from "@/lib/auth"
-// api
-import { getOrCreateTodayQuestion } from "@/services/question.service"
+// actions
+import { getOrCreateTodayQuestion } from "@/actions/question.actions"
 
 export const dynamic = "force-dynamic"
 

@@ -2,9 +2,11 @@ import type { NextAuthConfig } from "next-auth"
 // constants
 import { PATHS } from "@/constants/paths"
 // services
-import { refreshAccessToken } from "@/services/auth.service"
+import { refreshAccessToken } from "@/services/token.service"
 
-export const authConfig: NextAuthConfig = {
+const TOKEN_MULTIPLIER = 1000 // 초를 밀리초로 변환
+
+export const nextAuthConfig: NextAuthConfig = {
   pages: {
     signIn: PATHS.SIGNIN,
     signOut: PATHS.SIGNOUT,
@@ -19,13 +21,15 @@ export const authConfig: NextAuthConfig = {
         token.id = user.id
         token.email = user.email
         token.accessToken = user.accessToken
-        token.accessTokenExpires = user.accessTokenExpires! * 1000
+        token.accessTokenExpires = user.accessTokenExpires! * TOKEN_MULTIPLIER
         token.refreshToken = user.refreshToken
-        token.refreshTokenExpires = user.refreshTokenExpires! * 1000
+        token.refreshTokenExpires = user.refreshTokenExpires! * TOKEN_MULTIPLIER
       }
 
-      // 액세스토큰이 만료되지 않았다면 리턴한다.
-      if (Date.now() < (token.accessTokenExpires as number)) {
+      // 액세스 토큰이 만료되지 않았다면 기존 토큰 반환
+      const currentTime = Date.now()
+      const accessTokenExpires = token.accessTokenExpires as number
+      if (currentTime < accessTokenExpires) {
         return token
       }
 
@@ -34,7 +38,7 @@ export const authConfig: NextAuthConfig = {
         refreshToken: token.refreshToken as string,
       })
 
-      if (!refreshedToken) {
+      if (!refreshedToken.data) {
         return {
           ...token,
           error: "RefreshToken expired",
@@ -43,10 +47,12 @@ export const authConfig: NextAuthConfig = {
 
       return {
         ...token,
-        accessToken: refreshedToken.accessToken,
-        accessTokenExpires: refreshedToken.accessTokenExpires * 1000,
-        refreshToken: refreshedToken.refreshToken,
-        refreshTokenExpires: refreshedToken.refreshTokenExpires * 1000,
+        accessToken: refreshedToken.data.access.token,
+        accessTokenExpires:
+          refreshedToken.data.access.expires * TOKEN_MULTIPLIER,
+        refreshToken: refreshedToken.data.refresh.token,
+        refreshTokenExpires:
+          refreshedToken.data.refresh.expires * TOKEN_MULTIPLIER,
       }
     },
 

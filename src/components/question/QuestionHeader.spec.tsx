@@ -4,27 +4,9 @@ import QuestionHeader from "@/components/question/QuestionHeader"
 // constants
 import { TIME_RANGES } from "@/constants/greetings"
 
-// Mock Image constructor
-const mockImage = {
-  onload: null as (() => void) | null,
-  onerror: null as (() => void) | null,
-  src: "",
-}
-
-// @ts-ignore
-global.Image = class {
-  onload: (() => void) | null = null
-  onerror: (() => void) | null = null
-  src: string = ""
-
-  constructor() {
-    Object.assign(this, mockImage)
-    setTimeout(() => {
-      if (this.onload) {
-        this.onload()
-      }
-    }, 0)
-  }
+interface MockImage extends HTMLImageElement {
+  onload: (() => void) | null
+  onerror: (() => void) | null
 }
 
 const MOCK_SESSION = {
@@ -41,6 +23,30 @@ describe("QuestionHeader Component", () => {
   const originalEnv = process.env
 
   beforeAll(() => {
+    const mockImage: MockImage = {
+      onload: null,
+      onerror: null,
+      src: "",
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+      setAttribute: jest.fn(),
+      getAttribute: jest.fn(),
+      style: {} as CSSStyleDeclaration,
+    } as unknown as MockImage
+
+    global.Image = jest.fn().mockImplementation(() => {
+      const instance = Object.create(mockImage)
+
+      setTimeout(() => {
+        if (instance.onload) {
+          instance.onload()
+        }
+      }, 0)
+
+      return instance
+    }) as unknown as typeof Image
+
     process.env = {
       ...originalEnv,
       NEXT_PUBLIC_DEFAULT_USER_IMAGE:
@@ -50,6 +56,8 @@ describe("QuestionHeader Component", () => {
 
   afterAll(() => {
     process.env = originalEnv
+
+    global.Image = Image
   })
 
   describe("Rendering Test", () => {

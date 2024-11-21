@@ -4,13 +4,13 @@ import MainPage from "@/app/page"
 // lib
 import { auth } from "@/lib/auth"
 // services
-import { getOrCreateTodayQuestion } from "@/services/question.service"
+import { getOrCreateTodayQuestion } from "@/actions/question.actions"
 
 jest.mock("@/lib/auth", () => ({
   auth: jest.fn(),
 }))
 
-jest.mock("@/services/question.service", () => ({
+jest.mock("@/actions/question.actions", () => ({
   getOrCreateTodayQuestion: jest.fn(),
 }))
 
@@ -49,7 +49,7 @@ describe("MainPage Component", () => {
     expect(screen.getByTestId("question-section")).toBeInTheDocument()
   })
 
-  it("should display an error message if fetchQuestion fails", async () => {
+  it("질문 데이터 요청에 실패할 경우 에러 메시지를 보여준다.", async () => {
     ;(auth as jest.Mock).mockResolvedValue(MOCK_SESSION)
 
     // API 호출 실패 시 에러를 던지도록 설정

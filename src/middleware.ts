@@ -1,11 +1,11 @@
 import NextAuth, { NextAuthRequest } from "next-auth"
 import { NextResponse } from "next/server"
 // config
-import { authConfig } from "@/lib/auth/auth.config"
+import { nextAuthConfig } from "@/config/nextAuth.config"
 // constants
 import { PATHS } from "@/constants/paths"
 
-const { auth, signOut } = NextAuth(authConfig)
+const { auth, signOut } = NextAuth(nextAuthConfig)
 
 // 리다이렉트 URL 생성 함수
 function createRedirectUrl(request: NextAuthRequest, targetUrl: string) {

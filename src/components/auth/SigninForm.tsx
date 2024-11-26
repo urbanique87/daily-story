@@ -1,7 +1,6 @@
 "use client"
 
 import { FormEvent, useState, useTransition } from "react"
-import { useFormStatus } from "react-dom"
 import { useRouter } from "next/navigation"
 // hooks
 import { useValidation } from "@/hooks/useValidation"
@@ -9,20 +8,21 @@ import { useValidation } from "@/hooks/useValidation"
 import { InputField } from "@/components/ui/InputField"
 // constants
 import { PATHS } from "@/constants/paths"
+import { ERROR_MESSAGES } from "@/constants/error"
 // actions
 import { signin } from "@/actions/signin.actions"
 
 export function SigninForm() {
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-
-  const [, startTransition] = useTransition()
-
-  const { errors, validateField } = useValidation()
-  const { pending } = useFormStatus()
   const router = useRouter()
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const [formError, setFormError] = useState<string | null>(null)
+  // const [success, setSuccess] = useState(false)
+
+  const [isSubmitting, startTransition] = useTransition()
+
+  const { errors, validateField } = useValidation()
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.currentTarget
@@ -32,72 +32,40 @@ export function SigninForm() {
     const password = formData.get("password") as string
 
     if (validateField("email", email) || validateField("password", password)) {
-      setError("입력값을 확인해주세요.")
-      return
+      return setFormError(ERROR_MESSAGES.VALIDATION_INVALID_INPUT)
     }
 
-    try {
-      startTransition(async () => {
-        const response = await signin({
-          email,
-          password,
-        })
+    startTransition(async () => {
+      const response = await signin({ email, password })
+      if (!response.success) {
+        return setFormError(response.error.message)
+      }
 
-        if (!response.success) {
-          switch (response.errorCode) {
-            case "INVALID_INPUT":
-              setError("이메일과 비밀번호를 모두 입력해주세요.")
-              return
-            case "INVALID_CREDENTIALS":
-              setError("이메일 또는 비밀번호가 올바르지 않습니다.")
-              return
-            case "AUTH_ERROR":
-              setError("로그인에 문제가 발생했습니다. 다시 시도해주세요.")
-              return
-            default:
-              setError("알 수 없는 오류가 발생했습니다.")
-              return
-          }
-        }
+      // setSuccess(true)
+      form.reset()
 
-        setSuccess(true)
-
-        // 폼 초기화
-        form.reset()
-
-        // 로그인 후, callbackUrl이 있다면 해당 URL로 리다이렉트
-        const callbackUrl = new URLSearchParams(window.location.search).get(
-          "callbackUrl"
-        )
-        if (callbackUrl) {
-          // callbackUrl이 있으면 해당 URL로 리다이렉트
-          router.replace(callbackUrl)
-        } else {
-          // 기본 메인 페이지로 이동
-          router.replace(PATHS.MAIN)
-        }
-      })
-    } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "로그인 중 오류가 발생했습니다."
+      // 리다이렉트 로직
+      const callbackUrl = new URLSearchParams(window.location.search).get(
+        "callbackUrl"
       )
-    }
+      router.replace(callbackUrl || PATHS.MAIN)
+    })
   }
 
   return (
     <div className="flex justify-center pt-[150px] pb-[50px] md:pt-[250px] md:pb-[100px] transition-all duration-500 ease-in-out">
       <form className="w-full max-w-[400px]" onSubmit={handleSubmit}>
         {/* TODO: 토스트 처리 */}
-        {error && (
-          <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>
+        {formError && (
+          <div className="p-3 text-red-500 bg-red-100 rounded">{formError}</div>
         )}
 
         {/* TODO: 토스트 처리 */}
-        {success && (
+        {/* {success && (
           <div className="p-3 text-green-500 bg-green-100 rounded">
             로그인이 완료되었습니다!
           </div>
-        )}
+        )} */}
 
         <div className="mb-1">
           <InputField
@@ -129,10 +97,10 @@ export function SigninForm() {
 
         <button
           type="submit"
-          disabled={pending}
+          disabled={isSubmitting}
           className="w-full px-4 py-2 text-white bg-blue-500 rounded disabled:bg-blue-300"
         >
-          {pending ? "잠시만 기다려주세요" : "Login"}
+          {isSubmitting ? "잠시만 기다려주세요" : "Login"}
         </button>
       </form>
     </div>

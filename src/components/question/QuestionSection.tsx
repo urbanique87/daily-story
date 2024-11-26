@@ -30,7 +30,7 @@ export default function QuestionSection({ question }: { question: Question }) {
         aria-label={`오늘의 이야기 적기: ${question.question}`}
         href={PATHS.ANSWER.byId(question.id)}
       >
-        ✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰
+        {question.answer || "✍️ 여기를 눌러서 오늘의 이야기를 적어봐 🥰"}
       </Link>
     </section>
   )

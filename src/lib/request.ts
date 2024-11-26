@@ -1,5 +1,7 @@
-// types
-import { AppError, ErrorCode } from "@/types/error.types"
+// constatns
+import { ErrorCodeMap } from "@/constants/error"
+// utils
+import { AppError } from "@/utils/errors/custom.error"
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
@@ -22,28 +24,19 @@ export async function request<T>(
     })
 
     if (!response.ok) {
-      throw new AppError(
-        ErrorCode.INVALID_REQUEST,
-        response.status,
-        response.statusText
-      )
+      throw new AppError(ErrorCodeMap.REQUEST_INVALID.code)
     }
 
-    const data = await response.json()
-    return data.data as T
+    const { data } = await response.json()
+    return data as T
   } catch (error) {
-    if (error instanceof AppError) {
-      throw error
-    }
-
-    if (error instanceof Error) {
-      throw new AppError(ErrorCode.INTERNAL_SERVER_ERROR, 500, error.message)
-    }
-
-    throw new AppError(
-      ErrorCode.INTERNAL_SERVER_ERROR,
-      500,
-      "Unknown error occurred"
-    )
+    throw error instanceof AppError
+      ? error
+      : new AppError(
+          ErrorCodeMap.SERVER_INTERNAL_ERROR.code,
+          error instanceof Error
+            ? error.message
+            : "예상치 못한 오류가 발생했습니다."
+        )
   }
 }

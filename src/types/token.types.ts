@@ -1,14 +1,10 @@
 import { JwtPayload } from "jsonwebtoken"
 
 export interface Tokens {
-  access: {
-    token: string
-    expires: number
-  }
-  refresh: {
-    token: string
-    expires: number
-  }
+  accessToken: string
+  accessTokenExpires: number
+  refreshToken: string
+  refreshTokenExpires: number
 }
 
 export interface TokenPayload extends JwtPayload {

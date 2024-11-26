@@ -1,8 +1,18 @@
-import { ErrorCode } from "@/types/error.types"
+import { ErrorCode } from "@/constants/error"
 
-export interface ApiResponse<T> {
-  success: boolean
-  message: string
-  data: T | null
-  error?: ErrorCode
+type SuccessResponse<T> = {
+  success: true
+  data: T
 }
+
+export type ErrorResponse = {
+  success: false
+  error: {
+    code: ErrorCode
+    message: string
+    // 필요한 경우 추가 정보
+    details?: unknown
+  }
+}
+
+export type ApiResponse<T> = SuccessResponse<T> | ErrorResponse

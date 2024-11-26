@@ -5,7 +5,7 @@ export function validateEmail(email: string) {
   if (!trimmedEmail) {
     return {
       isValid: false,
-      error: "이메일을 입력해주세요.",
+      error: "올바른 이메일 형식을 입력해주세요.",
       value: trimmedEmail,
     }
   }

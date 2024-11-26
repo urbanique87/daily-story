@@ -1,10 +1,14 @@
 import type { NextAuthConfig } from "next-auth"
 // constants
 import { PATHS } from "@/constants/paths"
-// services
-import { refreshAccessToken } from "@/services/token.service"
+// actions
+import { renewAccessToken } from "@/actions/token.actions"
+
+// ----------------------------------------------------------------------
 
 const TOKEN_MULTIPLIER = 1000 // 초를 밀리초로 변환
+
+// ----------------------------------------------------------------------
 
 export const nextAuthConfig: NextAuthConfig = {
   pages: {
@@ -34,11 +38,11 @@ export const nextAuthConfig: NextAuthConfig = {
       }
 
       // 액세스토큰이 만료되었다면, 리프레시토큰으로 재발급을 받는다.
-      const refreshedToken = await refreshAccessToken({
+      const refreshedToken = await renewAccessToken({
         refreshToken: token.refreshToken as string,
       })
 
-      if (!refreshedToken.data) {
+      if (!refreshedToken.success) {
         return {
           ...token,
           error: "RefreshToken expired",
@@ -47,12 +51,12 @@ export const nextAuthConfig: NextAuthConfig = {
 
       return {
         ...token,
-        accessToken: refreshedToken.data.access.token,
+        accessToken: refreshedToken.data.accessToken,
         accessTokenExpires:
-          refreshedToken.data.access.expires * TOKEN_MULTIPLIER,
-        refreshToken: refreshedToken.data.refresh.token,
+          refreshedToken.data.accessTokenExpires * TOKEN_MULTIPLIER,
+        refreshToken: refreshedToken.data.refreshToken,
         refreshTokenExpires:
-          refreshedToken.data.refresh.expires * TOKEN_MULTIPLIER,
+          refreshedToken.data.refreshTokenExpires * TOKEN_MULTIPLIER,
       }
     },
 

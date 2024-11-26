@@ -7,28 +7,25 @@ import { prisma } from "@/lib/prisma"
 import { signIn } from "@/lib/auth"
 // constants
 import { PATHS } from "@/constants/paths"
+// utils
+import { AppError } from "@/utils/errors/custom.error"
+import { handleActionError } from "@/utils/errors/action-error-handler"
+import { ApiResponse } from "@/types/response.types"
+import { ErrorCodeMap } from "@/constants/error"
 
-export async function signup(formData: FormData) {
+export async function signup(formData: FormData): Promise<ApiResponse<null>> {
   try {
     // formData에서 이메일, 비밀번호 추출
     const email = formData.get("email")
     const password = formData.get("password")
 
     if (!email || !password) {
-      return {
-        success: false,
-        errorCode: "MISSING_FIELDS",
-        message: "이메일과 비밀번호는 필수입니다.",
-      }
+      throw new AppError(ErrorCodeMap.VALIDATION_REQUIRED_FIELD_MISSING.code)
     }
 
     // 타입 검사
     if (typeof email !== "string" || typeof password !== "string") {
-      return {
-        success: false,
-        errorCode: "INVALID_FORMAT",
-        message: "잘못된 입력 형식입니다.",
-      }
+      throw new AppError(ErrorCodeMap.VALIDATION_FORMAT_ERROR.code)
     }
 
     // 이메일 중복 확인
@@ -37,11 +34,7 @@ export async function signup(formData: FormData) {
     })
 
     if (existingUser) {
-      return {
-        success: false,
-        errorCode: "USER_EXISTS",
-        message: "User already exists",
-      }
+      throw new AppError(ErrorCodeMap.AUTH_DUPLICATE_USER.code)
     }
 
     // 비밀번호 해시화
@@ -65,14 +58,8 @@ export async function signup(formData: FormData) {
     // 페이지 데이터 갱신
     revalidatePath(PATHS.SIGNUP)
 
-    return { success: true }
+    return { success: true, data: null }
   } catch (error) {
-    console.error("Signup error:", error)
-
-    return {
-      success: false,
-      errorCode: "SERVER_ERROR",
-      message: "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-    }
+    return handleActionError(error)
   }
 }

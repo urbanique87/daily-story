@@ -26,8 +26,8 @@ export default async function MainPage() {
     <main className="max-w-[960px] px-4 mx-auto">
       <QuestionHeader session={session} />
       <div className="py-6">
-        {question ? (
-          <QuestionSection question={question} />
+        {question.success ? (
+          <QuestionSection question={question.data} />
         ) : (
           <QuestionSectionFallback />
         )}

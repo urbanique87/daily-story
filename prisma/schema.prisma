@@ -104,7 +104,7 @@ model UserQuestion {
   questionTemplate QuestionTemplate @relation(fields: [questionId], references: [id])
   userAnswer       UserAnswer?      @relation(fields: [answerId], references: [id])
 
-  @@unique([userId, questionId])
+  @@unique([userId, questionId], name: "userId_questionId_unique")
 }
 
 // enum Visibility {
@@ -127,4 +127,6 @@ model UserAnswer {
   questionTemplate QuestionTemplate @relation(fields: [questionId], references: [id])
 
   UserQuestion UserQuestion[]
+
+  @@unique([userId, questionId], name: "userId_questionId_unique")
 }

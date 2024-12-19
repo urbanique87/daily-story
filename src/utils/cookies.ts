@@ -1,6 +1,6 @@
 import { cookies } from "next/headers"
 // lib
-import { getTokenExpiration } from "@/lib/jwt"
+import { getTokenExpiration } from "@/utils/jwt"
 
 // 기본 만료 시간을 설정하는 함수
 function getDefaultExpiration(): Date {

@@ -1,12 +1,7 @@
 "use client"
 
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from "react"
+import { createContext, useContext, useLayoutEffect, useState } from "react"
+import type { Dispatch, ReactNode, SetStateAction } from "react"
 // utils
 import { cn } from "@/utils/cn"
 
@@ -14,7 +9,7 @@ type ImageLoadingStatus = "idle" | "loaded" | "error"
 
 type AvatarContextType = {
   loadingStatus: ImageLoadingStatus
-  setLoadingStatus: React.Dispatch<React.SetStateAction<ImageLoadingStatus>>
+  setLoadingStatus: Dispatch<SetStateAction<ImageLoadingStatus>>
   className?: string
 }
 

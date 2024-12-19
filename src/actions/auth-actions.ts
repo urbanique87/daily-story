@@ -1,5 +1,5 @@
 // services
-import { validateUserCredentials } from "@/services/auth.service"
+import { validateUserCredentials } from "@/services/auth-service"
 // types
 import type { Credentials } from "@/types/auth.types"
 import type { ApiResponse } from "@/types/response.types"

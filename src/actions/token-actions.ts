@@ -1,5 +1,5 @@
 // services
-import { issueTokenPair, reissueAccessToken } from "@/services/token.service"
+import { issueTokenPair, reissueAccessToken } from "@/services/token-service"
 // types
 import { ApiResponse } from "@/types/response.types"
 import { TokenPayload, Tokens } from "@/types/token.types"

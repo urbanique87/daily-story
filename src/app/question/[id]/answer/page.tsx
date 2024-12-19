@@ -1,11 +1,11 @@
-import {
-  AnswerProvider,
-  AnswerHeader,
-  QuestionDisplay,
-  AnswerTextarea,
-} from "@/components/answer"
 // actions
-import { getQuestionWithAnswerById } from "@/actions/question.actions"
+import { getQuestionWithAnswerById } from "@/app/(main)/_actions/question-actions"
+// components
+import { AnswerPageHeader } from "../../_components/answer-page-header"
+import { QuestionDisplaySection } from "../../_components/question-display-section"
+import { AnswerTextarea } from "../../_components/answer-textarea"
+// provider
+import { AnswerProvider } from "../../_context/answer-provider"
 
 export default async function AnswerPage({
   params,
@@ -21,8 +21,8 @@ export default async function AnswerPage({
   return (
     <main className="max-w-[960px] px-4 mx-auto">
       <AnswerProvider question={question.data}>
-        <AnswerHeader />
-        <QuestionDisplay />
+        <AnswerPageHeader />
+        <QuestionDisplaySection />
         <AnswerTextarea />
       </AnswerProvider>
     </main>

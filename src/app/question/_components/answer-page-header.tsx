@@ -1,10 +1,12 @@
+"use client"
+
 import { useRouter } from "next/navigation"
 // actions
-import { saveAnswer } from "@/actions/answer.actions"
+import { saveAnswer } from "../_actions/answer-actions"
+import { useAnswerContext } from "../_context/answer-provider"
 // context
-import { useAnswerContext } from "@/components/answer"
 
-export function AnswerHeader() {
+export function AnswerPageHeader() {
   const { question, inputRef } = useAnswerContext()
 
   const router = useRouter()

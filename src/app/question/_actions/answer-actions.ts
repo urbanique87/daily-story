@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 // lib
 import { auth } from "@/lib/auth"
 // services
-import { createUserAnswer } from "@/services/answer.service"
+import { createUserAnswer } from "@/app/question/_services/answer-service"
 // utils
 import { AppError } from "@/utils/errors/custom.error"
 import { handleActionError } from "@/utils/errors/action-error-handler"

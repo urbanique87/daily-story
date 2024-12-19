@@ -1,12 +1,12 @@
-// components
-import QuestionHeader from "@/components/question/QuestionHeader"
-import QuestionSection from "@/components/question/QuestionSection"
-import QuestionSectionFallback from "@/components/question/QuestionSection.fallback"
-import AuthMenu from "@/components/auth/AuthMenu"
+import AuthMenu from "@/app/(main)/_components/auth-menu"
 // lib
 import { auth } from "@/lib/auth"
 // actions
-import { getOrCreateTodayQuestion } from "@/actions/question.actions"
+import { getOrCreateTodayQuestion } from "@/app/(main)/_actions/question-actions"
+// components
+import QuestionHeader from "./_components/question-header"
+import QuestionSection from "./_components/question-section"
+import QuestionSectionFallback from "./_components/question-section-fallback"
 
 export const dynamic = "force-dynamic"
 
@@ -25,6 +25,7 @@ export default async function MainPage() {
   return (
     <main className="max-w-[960px] px-4 mx-auto">
       <QuestionHeader session={session} />
+
       <div className="py-6">
         {question.success ? (
           <QuestionSection question={question.data} />

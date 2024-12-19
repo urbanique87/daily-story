@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react"
 // components
-import MainPage from "@/app/page"
+import MainPage from "@/app/(main)/page"
 // lib
 import { auth } from "@/lib/auth"
 // services
-import { getOrCreateTodayQuestion } from "@/actions/question.actions"
+import { getOrCreateTodayQuestion } from "@/app/(main)/_actions/question-actions"
 
 jest.mock("@/lib/auth", () => ({
   auth: jest.fn(),

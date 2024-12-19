@@ -1,8 +1,8 @@
+import type { Session } from "next-auth"
 // libs
 import { getTimeBasedGreeting } from "@/lib/getTimeBasedGreeting"
-// type
-import type { Session } from "next-auth"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar"
+// components
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar"
 
 /**
  * 질문 페이지 헤더

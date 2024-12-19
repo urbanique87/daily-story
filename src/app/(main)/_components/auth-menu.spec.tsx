@@ -1,8 +1,7 @@
-// import { useRouter } from "next/navigation"
 import userEvent from "@testing-library/user-event"
 import { render, screen } from "@testing-library/react"
 // components
-import AuthMenu from "@/components/auth/AuthMenu"
+import AuthMenu from "@/app/(main)/_components/auth-menu"
 // constants
 import { PATHS } from "@/constants/paths"
 // mocks

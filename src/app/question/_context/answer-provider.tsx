@@ -1,14 +1,12 @@
-import { createContext, ReactNode, useContext, useRef } from "react"
+"use client"
+
+import { useContext, useRef } from "react"
+// context
+import { AnswerContext } from "./answer-context"
 // types
-import type { Question } from "@/types/question.types"
+import { AnswerProviderProps } from "./types"
 
-type AnswerContextType = {
-  question: Question
-  inputRef: React.RefObject<HTMLTextAreaElement>
-  className?: string
-}
-
-const AnswerContext = createContext<AnswerContextType | null>(null)
+// ----------------------------------------------------------------------
 
 export const useAnswerContext = () => {
   const context = useContext(AnswerContext)
@@ -20,15 +18,13 @@ export const useAnswerContext = () => {
   return context
 }
 
+// ----------------------------------------------------------------------
+
 export function AnswerProvider({
   question,
   className = "w-[40px] h-[40px]",
   children,
-}: {
-  question: Question
-  className?: string
-  children: ReactNode
-}) {
+}: AnswerProviderProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
   return (

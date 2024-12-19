@@ -4,10 +4,10 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 // lib
 import { prisma } from "@/lib/prisma"
 // config
-import { nextAuthConfig } from "@/config/nextAuth.config"
+import { nextAuthConfig } from "@/config/nextAuth-config"
 // actions
-import { loginUser } from "@/actions/auth.actions"
-import { generateToken } from "@/actions/token.actions"
+import { loginUser } from "@/actions/auth-actions"
+import { generateToken } from "@/actions/token-actions"
 // types
 import { TokenPayload, Tokens } from "@/types/token.types"
 // constants

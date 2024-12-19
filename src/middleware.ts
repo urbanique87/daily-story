@@ -1,11 +1,15 @@
 import NextAuth, { NextAuthRequest } from "next-auth"
 import { NextResponse } from "next/server"
 // config
-import { nextAuthConfig } from "@/config/nextAuth.config"
+import { nextAuthConfig } from "@/config/nextAuth-config"
 // constants
 import { PATHS } from "@/constants/paths"
 
+// ----------------------------------------------------------------------
+
 const { auth, signOut } = NextAuth(nextAuthConfig)
+
+// ----------------------------------------------------------------------
 
 // 리다이렉트 URL 생성 함수
 function createRedirectUrl(request: NextAuthRequest, targetUrl: string) {
@@ -42,6 +46,8 @@ function handleAuthenticatedRedirect(request: NextAuthRequest) {
     ? NextResponse.redirect(createRedirectUrl(request, callbackUrl)) // callbackUrl이 있으면 리다이렉트
     : NextResponse.next() // 없으면 기본 흐름
 }
+
+// ----------------------------------------------------------------------
 
 export default auth(async function middleware(request: NextAuthRequest) {
   const unprotectedPaths = [PATHS.MAIN, PATHS.SIGNIN, PATHS.SIGNUP]

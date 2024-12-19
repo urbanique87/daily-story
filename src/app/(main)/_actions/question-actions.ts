@@ -8,7 +8,7 @@ import {
   createTodayQuestion,
   getQuestionById,
   getTodayQuestion,
-} from "@/services/question.service"
+} from "@/app/(main)/_services/question-service"
 // types
 import { Question } from "@/types/question.types"
 import { ApiResponse } from "@/types/response.types"

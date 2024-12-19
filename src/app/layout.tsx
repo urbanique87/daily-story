@@ -1,8 +1,10 @@
+import type { ReactNode } from "react"
 import type { Metadata } from "next"
 // providers
-import { Providers } from "@/context/session.providers"
+import { Providers } from "@/providers/session.providers"
+import { ModalProvider } from "@/providers/modal.providers"
 // components
-import Header from "@/components/layout/Header"
+// import Header from "@/components/layout/Header"
 // styles
 import "./globals.css"
 
@@ -15,22 +17,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
-      </head>
       <body>
         <Providers>
-          <Header />
-          {children}
+          <ModalProvider>
+            {/* <div className="flex flex-col min-h-screen">
+            <Header /> */}
+            {children}
+            {/* </div> */}
+          </ModalProvider>
         </Providers>
       </body>
     </html>

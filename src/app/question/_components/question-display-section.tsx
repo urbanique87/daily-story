@@ -1,7 +1,7 @@
-import { useAnswerContext } from "@/components/answer"
 import { formatCustomDate } from "@/lib/dateFormatter"
+import { useAnswerContext } from "../_context/answer-provider"
 
-export function QuestionDisplay() {
+export function QuestionDisplaySection() {
   const { question } = useAnswerContext()
 
   return (

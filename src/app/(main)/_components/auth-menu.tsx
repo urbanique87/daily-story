@@ -20,7 +20,7 @@ export default function AuthMenu() {
           Daily Story
         </Heading>
 
-        <Text variant="body" size="sm" className="mb-4">
+        <Text as="p" size="sm" className="mb-4">
           매일 새로운 질문으로 이야기를 기록해보세요.
         </Text>
 

@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth"
 // constants
 import { PATHS } from "@/constants/paths"
 // actions
-import { renewAccessToken } from "@/actions/token.actions"
+import { renewAccessToken } from "@/actions/token-actions"
 
 // ----------------------------------------------------------------------
 

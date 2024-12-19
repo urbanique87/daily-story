@@ -1,42 +1,56 @@
-import { ReactNode } from "react"
+import { createElement, forwardRef } from "react"
+import type {
+  ComponentPropsWithoutRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  ReactNode,
+} from "react"
+// utils
 import { cn } from "@/utils/cn"
 
-type TextVariant = "body" | "label" | "caption"
-type TextSize = "xs" | "sm" | "md" | "lg"
-
-interface TextProps {
-  variant?: TextVariant
-  size?: TextSize
-  children: ReactNode
-  className?: string
-  as?: keyof JSX.IntrinsicElements
-}
-
-const variantClasses: Record<TextVariant, string> = {
-  body: "text-gray-700 dark:text-gray-300",
-  label: "text-gray-600 dark:text-gray-400 font-medium",
-  caption: "text-gray-500 dark:text-gray-500",
-}
+type TextSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl"
 
 const sizeClasses: Record<TextSize, string> = {
   xs: "text-xs",
   sm: "text-sm",
   md: "text-base",
   lg: "text-lg",
+  xl: "text-xl",
+  "2xl": "text-2xl",
+  "3xl": "text-3xl",
+  "4xl": "text-4xl",
+  "5xl": "text-4xl",
 }
 
-export const Text = ({
-  variant = "body",
-  size = "md",
-  children,
-  className,
-  as: Component = "p",
-}: TextProps) => {
-  return (
-    <Component
-      className={cn(variantClasses[variant], sizeClasses[size], className)}
-    >
-      {children}
-    </Component>
+type TextProps<T extends ElementType = "span"> = {
+  as?: T
+  className?: string
+  size?: TextSize
+  children?: ReactNode
+} & Omit<ComponentPropsWithoutRef<T>, "as" | "children">
+
+export const Text = forwardRef(function Text<
+  T extends ElementType = "span",
+  R extends HTMLElement = HTMLSpanElement
+>(props: TextProps<T>, ref: ForwardedRef<R>) {
+  const {
+    as: Component = "span" as T,
+    className,
+    size = "md",
+    children,
+    ...rest
+  } = props
+
+  return createElement(
+    Component,
+    {
+      ref,
+      className: cn(sizeClasses[size], className),
+      ...rest,
+    },
+    children
   )
-}
+}) as <T extends ElementType = "span", R extends HTMLElement = HTMLSpanElement>(
+  props: TextProps<T> & { ref?: ForwardedRef<R> }
+) => ReactElement | null

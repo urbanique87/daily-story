@@ -112,6 +112,12 @@ export const ErrorCodeMap = {
     code: "ERROR_UNEXPECTED",
     message: "예상치 못한 오류가 발생했습니다.",
   },
+
+  // Login Errors
+  AUTH_LOGIN_FAILED: {
+    code: "AUTH_LOGIN_FAILED",
+    message: "로그인 중 오류가 발생했습니다.",
+  },
 } as const
 
 // 에러 코드 타입
